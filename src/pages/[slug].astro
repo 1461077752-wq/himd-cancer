@@ -1,0 +1,703 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+
+export async function getStaticPaths() {
+  // 生产环境仅渲染已发布页面；开发环境放开，便于预览审核中的样稿
+  const drugs = await getCollection('drugs', ({ data }) => data.status === 'published' || import.meta.env.DEV);
+  return drugs.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const d = entry.data;
+
+// 来源按证据类型分层：一手文件在前，便于读者与研究引用
+const sourceKindLabels: Record<string, string> = {
+  label: '药品说明书与监管文件',
+  guideline: '诊疗指南',
+  trial: '临床研究原文',
+  regulatory: '监管与政策',
+  price: '价格与医保口径',
+  other: '其他公开资料',
+};
+const sourceGroups = Object.entries(sourceKindLabels)
+  .map(([kind, label]) => ({
+    label,
+    items: d.sources.filter((source) => (source.kind ?? 'other') === kind),
+  }))
+  .filter((group) => group.items.length > 0);
+const featuredSources = d.sources.filter((source) => source.kind === 'label').slice(0, 2);
+const remainingSourceGroups = sourceGroups
+  .map((group) => ({ ...group, items: group.items.filter((source) => !featuredSources.includes(source)) }))
+  .filter((group) => group.items.length > 0);
+
+const h2 = headings.filter((h) => h.depth === 2).map((h) => ({ slug: h.slug, text: h.text }));
+// 分诊与页内目录只认 H2；卡面锚点允许落到 H3（如「要吃多久？什么时候能停？」），
+// 否则两张卡会挤在同一个 H2 上，用户点下去落在同一屏，读起来像重复问题。
+const allHeadings = headings.map((h) => ({ slug: h.slug, text: h.text }));
+const slugOf = (prefix: string) => allHeadings.find((h) => h.text.startsWith(prefix))?.slug;
+const hrefOf = (prefix: string) => {
+  const slug = slugOf(prefix);
+  return slug ? `#${slug}` : `#${toc[0]?.slug ?? ''}`;
+};
+
+// 页内导航分段：前六节回答患者最先要做的决定，后半段是说明书级细节，标签即患者要解决的问题
+const chapters: { prefix: string; label: string; tier?: 'pro' }[] = [
+  { prefix: '哪些人适合用', label: '是否适用' },
+  { prefix: '怎么吃', label: '服药方法' },
+  { prefix: '副作用', label: '副作用处理' },
+  { prefix: '疗效', label: '疗效数据' },
+  { prefix: '要花多少钱', label: '价格医保' },
+  { prefix: '耐药', label: '耐药以后' },
+  { prefix: '同类药', label: '同类药对比' },
+  { prefix: '药盒里', label: '说明书重点', tier: 'pro' },
+  { prefix: '肝不好', label: '特殊情况', tier: 'pro' },
+  { prefix: '药在身体里', label: '药在身体里', tier: 'pro' },
+  { prefix: '平时要注意', label: '平时注意', tier: 'pro' },
+];
+
+const toc = [
+  ...chapters
+    .map((c) => ({ slug: slugOf(c.prefix), text: c.label, tier: c.tier }))
+    .filter((c) => c.slug),
+  { slug: 'sources', text: '信息来源' },
+  { slug: 'trials', text: '临床试验服务' },
+];
+
+const canonical = new URL(`/${entry.id}`, SITE.url).href;
+
+const drugLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Drug',
+  name: d.genericName,
+  alternateName: [d.brandName, d.englishName, ...d.aliases],
+  image: d.image ? new URL(d.image, SITE.url).href : undefined,
+  activeIngredient: d.genericName,
+  manufacturer: { '@type': 'Organization', name: d.manufacturer },
+  drugClass: d.drugClass,
+  mechanismOfAction: d.mechanismOfAction,
+  dosageForm: d.dosageForm,
+  administrationRoute: d.route,
+  dosage: d.dosage,
+  legalStatus: d.legalStatus,
+  indication: d.indications,
+  isAvailableGenerically: true,
+  offers: d.prices.map((p) => ({
+    '@type': 'Offer',
+    name: p.label,
+    price: p.price,
+    priceCurrency: 'CNY',
+    description: [p.unit, p.note].filter(Boolean).join('；'),
+  })),
+  warning:
+    '处方药，须凭基因检测结果在医生指导下使用。用药期间出现胸闷气短、干咳加重或发热（警惕间质性肺病），心悸、头晕或晕厥（警惕心脏毒性），或严重腹泻伴脱水、高热时，请立即就医。',
+};
+
+const breadcrumbLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: '首页', item: new URL('/', SITE.url).href },
+    { '@type': 'ListItem', position: 2, name: d.genericName, item: canonical },
+  ],
+};
+
+// 页面层实体：声明这是面向患者的医学页面，并给出最近复核时间与审核人（如已署名）
+const webPageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalWebPage',
+  name: d.titleTag,
+  url: canonical,
+  inLanguage: 'zh-CN',
+  lastReviewed: d.updatedAt.toISOString().slice(0, 10),
+  audience: { '@type': 'Patient' },
+  about: { '@type': 'Drug', name: d.genericName },
+  mainEntity: { '@type': 'Drug', name: d.genericName },
+  ...(d.reviewedBy ? { reviewedBy: { '@type': 'Person', name: d.reviewedBy } } : {}),
+};
+
+// 首屏直答卡也纳入 FAQ 结构化数据：它们是本页最可能被搜索摘要与 AI 抓取的问答对
+const quickFaq = (d.quickAnswers ?? []).filter(
+  (qa) => !d.faq.some((f) => f.question === qa.question),
+);
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [...quickFaq, ...d.faq].map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      // 直答卡各段（结论、选项、补充）在结构化数据里拼回一条完整答案
+      text: [
+        item.options ? `${item.answer}：${item.options.join('、')}` : item.answer,
+        item.detail,
+      ]
+        .filter(Boolean)
+        .join('。'),
+    },
+  })),
+};
+
+---
+
+<BaseLayout
+  title={d.titleTag}
+  description={d.metaDescription}
+  canonical={canonical}
+  schemaLd={[drugLd, webPageLd, breadcrumbLd, faqLd]}
+  image={d.image}
+  imageAlt={d.imageAlt}
+  wide
+>
+  <div id="reading-progress" class="fixed top-0 left-0 z-50 h-0.5 w-0 bg-brand-600" aria-hidden="true"></div>
+
+  <nav aria-label="面包屑" class="mt-5 flex items-center gap-1 text-[15px] text-ink-400">
+    <a href="/" class="rounded px-1 py-0.5 transition-colors hover:text-ink-800">首页</a>
+    <svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 4l4 4-4 4"></path>
+    </svg>
+    <span class="text-ink-700">{d.genericName}</span>
+  </nav>
+
+  <!-- 首屏：<sm 药名、结构图、档案表依次纵向堆叠；≥sm 回到原有「左文右图、档案表跟在药名下」的版式 -->
+  <header class="mt-6 sm:mt-10">
+    <div class="grid grid-cols-1 gap-y-5 sm:hidden">
+      <div class="min-w-0">
+        <p class="text-[14px] font-medium tracking-[0.18em] text-ink-400">药品信息 · {d.legalStatus}</p>
+        <h1 class="mt-3 font-serif text-4xl leading-tight font-bold tracking-tight text-ink-950">
+          {d.genericName}
+        </h1>
+      </div>
+      {
+        d.image && (
+          <figure class="w-full min-w-0">
+            <img
+              src={d.image}
+              alt={d.imageAlt}
+              width={d.imageWidth ?? 1200}
+              height={d.imageHeight ?? 800}
+              loading="eager"
+              class="w-full rounded-lg border border-ink-100 bg-white p-2"
+            />
+            {d.imageCaption && (
+              <figcaption class="mt-2 text-[14px] leading-relaxed text-ink-400">
+                {d.imageCaption}
+              </figcaption>
+            )}
+          </figure>
+        )
+      }
+      <dl class="border-y border-ink-100 py-3.5">
+        {
+          d.labelFacts.map((row) => (
+            <div class="flex gap-2.5 text-[15px] leading-relaxed">
+              <dt class="w-[4.5em] shrink-0 text-ink-400">{row.term}</dt>
+              <dd class="min-w-0 flex-1 text-ink-800">{row.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <div class="hidden sm:flex sm:items-start sm:gap-10">
+      <div class="min-w-0 flex-1">
+        <p class="text-[14px] font-medium tracking-[0.18em] text-ink-400">药品信息 · {d.legalStatus}</p>
+        <h1 class="mt-3 font-serif text-5xl leading-tight font-bold tracking-tight text-ink-950">
+          {d.genericName}
+        </h1>
+        {/* 说明书要点拆成独立条目：药名之下逐项确认身份，不再压成一段话 */}
+        <dl class="mt-5 grid gap-x-8 gap-y-2 border-y border-ink-100 py-3.5 sm:grid-cols-2">
+          {
+            d.labelFacts.map((row) => (
+              <div class="flex gap-2.5 text-[15px] leading-relaxed">
+                <dt class="w-[4.5em] shrink-0 text-ink-400">{row.term}</dt>
+                <dd class="min-w-0 flex-1 text-ink-800">{row.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      {
+        d.image && (
+          <figure class="mt-1 w-72 shrink-0 lg:w-80">
+            <img
+              src={d.image}
+              alt={d.imageAlt}
+              width={d.imageWidth ?? 1200}
+              height={d.imageHeight ?? 800}
+              loading="eager"
+              class="w-full rounded-lg border border-ink-100 bg-white p-2"
+            />
+            {d.imageCaption && (
+              <figcaption class="mt-2 text-[14px] leading-relaxed text-ink-400">
+                {d.imageCaption}
+              </figcaption>
+            )}
+          </figure>
+        )
+      }
+    </div>
+
+    <!-- 直答卡：介绍之后直接给答案，h3 + p 语义清晰，人和 AI 都抓得到 -->
+    {
+      d.quickAnswers && d.quickAnswers.length > 0 && (
+        <section class="mt-6 sm:mt-9" aria-label="患者最常问的问题">
+          <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {d.quickAnswers.map((qa) => (
+              <li class="flex">
+                <a
+                  href={qa.anchor ? hrefOf(qa.anchor) : `#${toc[0]?.slug ?? ''}`}
+                  class="group flex w-full flex-col rounded-lg border border-ink-100 bg-white p-5 transition-colors duration-150 hover:border-ink-300 hover:bg-ink-50/50 motion-reduce:transition-none"
+                >
+                  <h3 class="font-serif text-[17px] leading-snug font-semibold text-ink-800">
+                    {qa.question}
+                  </h3>
+                  {
+                    qa.options ? (
+                      <ul class="mt-3 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-ink-200 bg-ink-200">
+                        {qa.options.map((option) => (
+                          <li class="bg-white px-3 py-2 text-center text-[15px] leading-snug font-medium text-brand-800">
+                            {option}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p class="mt-3 text-[22px] leading-[1.3] font-bold tracking-[-0.01em] text-brand-800">
+                        {qa.answer}
+                      </p>
+                    )
+                  }
+                  {qa.detail && (
+                    <p class="mt-2.5 border-l-2 border-ink-200 pl-3 text-[15px] leading-relaxed text-ink-700">
+                      {qa.detail}
+                    </p>
+                  )}
+                  {qa.source && (
+                    <span class="mt-3 block text-[12px] leading-[1.55] text-ink-400">
+                      来源：{qa.source}
+                    </span>
+                  )}
+                  <span class="mt-auto inline-flex items-center gap-1.5 pt-3 text-[14px] font-semibold text-brand-700">
+                    {qa.nextStep}
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="h-3 w-3 transition-transform duration-150 group-hover:translate-x-0.5 motion-reduce:transition-none"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 8h10m0 0L9 4m4 4-4 4" />
+                    </svg>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </header>
+
+  <div class="mt-12 lg:grid lg:grid-cols-[minmax(0,768px)_minmax(230px,1fr)] lg:gap-12 xl:grid-cols-[minmax(0,768px)_minmax(320px,1fr)] xl:gap-14">
+    <div class="min-w-0 max-w-3xl">
+      <!-- 移动端与平板目录：折叠面板。横排胶囊放不下 12 节，改成收起一条、展开两列铺满 -->
+      <nav
+        aria-label="本页目录"
+        class="sticky top-12 z-30 -mx-4 border-b border-ink-200 bg-white/95 px-4 backdrop-blur-md lg:hidden"
+      >
+        <button
+          type="button"
+          data-toc-toggle
+          aria-expanded="false"
+          aria-controls="toc-panel"
+          class="flex w-full items-center gap-2 py-2.5"
+        >
+          <svg
+            viewBox="0 0 16 16"
+            class="h-4 w-4 shrink-0 text-ink-500"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <path d="M2.5 4h11M2.5 8h11M2.5 12h7"></path>
+          </svg>
+          <span class="shrink-0 text-[15px] font-semibold text-ink-900">目录</span>
+          <span class="min-w-0 flex-1"></span>
+          <span
+            class="inline-flex max-w-[60%] items-center gap-1.5 truncate rounded-full bg-brand-50 px-2.5 py-1 text-[13px] font-medium text-brand-800 ring-1 ring-inset ring-brand-200/70"
+            data-toc-current
+          >
+            <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-600" aria-hidden="true"></span>
+            <span class="truncate" data-toc-current-label>{toc[0]?.text ?? ''}</span>
+          </span>
+          <svg
+            viewBox="0 0 16 16"
+            data-toc-chevron
+            class="h-4 w-4 shrink-0 text-ink-400 transition-transform duration-200 motion-reduce:transition-none"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M4 6l4 4 4-4"></path>
+          </svg>
+        </button>
+
+        <div id="toc-panel" class="hidden pb-3">
+          <ul class="grid grid-cols-2 gap-x-2 gap-y-0.5">
+            {
+              toc.map((item) => (
+                <li>
+                  <a
+                    href={`#${item.slug}`}
+                    data-toc-chip
+                    data-active="false"
+                    class="block truncate rounded-md px-2.5 py-1.5 text-[14px] leading-snug text-ink-700 transition-colors duration-150 hover:bg-ink-100 data-[active=true]:bg-brand-50 data-[active=true]:font-semibold data-[active=true]:text-brand-800"
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </nav>
+
+      <article class="medical-prose mt-12 lg:mt-0">
+        <Content />
+      </article>
+
+      <!-- 患者常见问题 -->
+      <section class="mt-12" aria-labelledby="faq-heading">
+        <h2 id="faq-heading" class="section-heading pb-3 text-2xl">患者常见问题</h2>
+        <div class="divide-y divide-ink-100">
+          {
+            d.faq.map((item) => (
+              <details class="group py-4">
+                <summary class="flex cursor-pointer list-none items-center gap-3 select-none [&::-webkit-details-marker]:hidden">
+                  <span class="flex-1 font-medium leading-snug text-ink-900 group-open:text-brand-800">{item.question}</span>
+                  <svg
+                    viewBox="0 0 16 16"
+                    class="h-4 w-4 shrink-0 text-ink-300 transition-transform duration-200 group-open:rotate-45 group-open:text-brand-700 motion-reduce:transition-none"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.75"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M8 3v10M3 8h10" />
+                  </svg>
+                </summary>
+                <p class="mt-3 leading-[1.85] text-ink-700">{item.answer}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 信息来源：正文每节末尾只标了当节来源，这里把全部来源按证据类型集中列出 -->
+      <section id="sources" class="mt-14 scroll-mt-28 sm:scroll-mt-24" aria-labelledby="sources-heading">
+        <h2 id="sources-heading" class="section-heading pb-3 text-2xl">信息来源</h2>
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed text-ink-600">
+          本页内容整理自下列公开资料，共 {d.sources.length} 条，按证据类型分组：药品说明书与监管文件在前，临床研究原文可回溯原始数据。政策与价格类信息随时可能变化，请以最新官方发布为准。
+        </p>
+        <ul class="mt-6 space-y-2 border-l border-ink-100 pl-4">
+          {featuredSources.map((item) => (
+            <li class="text-[15px] leading-relaxed">
+              {item.url ? (
+                <a href={item.url} target="_blank" rel="noopener noreferrer" class="text-ink-700 underline decoration-ink-300 underline-offset-2 transition-colors duration-150 hover:text-brand-700 hover:decoration-brand-400">
+                  {item.label}
+                </a>
+              ) : (
+                <span class="text-ink-700">{item.label}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+        {remainingSourceGroups.length > 0 && <details class="sources-details mt-5">
+          <summary class="w-fit cursor-pointer rounded-lg border border-ink-200 px-4 py-2 text-[15px] font-medium text-brand-700 hover:border-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+            <span class="show-more">展开全部（{d.sources.length} 条）</span>
+            <span class="show-less">收起来源</span>
+          </summary>
+          <div class="mt-6 space-y-6">
+          {
+            remainingSourceGroups.map((group) => (
+              <div>
+                <h3 class="flex items-baseline gap-2 text-[15px] font-semibold text-ink-900">
+                  {group.label}
+                  <span class="text-[13px] font-normal text-ink-400">{group.items.length} 条</span>
+                </h3>
+                <ul class="mt-2.5 space-y-1.5 border-l border-ink-100 pl-4">
+                  {group.items.map((item) => (
+                    <li class="text-[15px] leading-relaxed">
+                      {item.url ? (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-ink-700 underline decoration-ink-300 underline-offset-2 transition-colors duration-150 hover:text-brand-700 hover:decoration-brand-400"
+                        >
+                          {item.label}
+                        </a>
+                      ) : (
+                        <span class="text-ink-700">{item.label}</span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+          </div>
+        </details>}
+      </section>
+
+      <!-- 临床试验匹配：整块可点，按钮指向招募站 -->
+      <section id="trials" class="mt-12 scroll-mt-28 sm:scroll-mt-24" aria-labelledby="trials-heading">
+        <a
+          href="https://www.himd.com/recruitment?source_page=/osimertinib"
+          class="group block rounded-xl bg-brand-900 p-6 transition-colors duration-200 hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-600 motion-reduce:transition-none sm:p-8"
+        >
+          <p class="text-[14px] font-medium tracking-[0.18em] text-brand-300">
+            临床试验匹配服务
+          </p>
+          <h2 id="trials-heading" class="section-heading mt-2.5 text-xl text-white sm:text-2xl">
+            耐药后、标准治疗效果有限时，临床试验是另一条路
+          </h2>
+          <p class="mt-4 max-w-2xl text-[16px] leading-relaxed text-brand-50">
+            试验药物和相关检查通常免费，能明显减轻经济负担；参加前签署知情同意书，讲清权益与风险，过程中可随时退出，不影响常规治疗。
+          </p>
+
+          <ul class="mt-5 flex flex-wrap gap-2">
+            <li class="rounded-full bg-white/10 px-3.5 py-1.5 text-[14px] text-brand-50">肿瘤领域</li>
+            <li class="rounded-full bg-white/10 px-3.5 py-1.5 text-[14px] text-ink-200">招募中</li>
+            <li class="rounded-full bg-white/10 px-3.5 py-1.5 text-[14px] text-ink-200">中国大陆开展</li>
+            <li class="rounded-full bg-white/10 px-3.5 py-1.5 text-[14px] text-ink-200">用药与检查免费</li>
+          </ul>
+
+          <span
+            class="mt-7 inline-flex min-h-12 items-center gap-2.5 rounded-lg bg-white px-6 py-3 text-[16px] font-semibold text-brand-900 transition-all duration-200 group-hover:gap-4 group-hover:bg-brand-50 motion-reduce:transition-none"
+          >
+            查看在招项目
+            <svg
+              viewBox="0 0 16 16"
+              class="h-4 w-4 shrink-0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M3 8h10m0 0L9 4m4 4-4 4" />
+            </svg>
+          </span>
+
+          <p class="mt-5 border-t border-white/15 pt-4 text-[14px] leading-relaxed text-brand-100">
+            入排标准较严（突变类型、既往治疗、身体状态），提交后由医学团队评估匹配。也可在国家药监局「药物临床试验登记与信息公示平台」自行查询。
+          </p>
+        </a>
+      </section>
+    </div>
+
+    <!-- 患者导航 -->
+    <aside class="hidden lg:block">
+      <div class="sticky top-24 space-y-5">
+        <nav aria-label="本页导航">
+          <p class="text-[14px] font-medium tracking-[0.18em] text-ink-400">本页导航</p>
+          <ul class="mt-3 border-l border-ink-100 text-[15px]">
+            {
+              toc.map((item, i) => (
+                <>
+                  <li>
+                    <a
+                      href={`#${item.slug}`}
+                      data-toc-link
+                      data-active="false"
+                      class="-ml-px block border-l-2 border-transparent py-1.5 pl-3.5 leading-snug text-ink-500 transition-colors duration-150 hover:border-ink-300 hover:text-ink-900 data-[active=true]:border-brand-600 data-[active=true]:font-medium data-[active=true]:text-ink-900"
+                    >
+                      {item.text}
+                    </a>
+                  </li>
+                </>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <!-- 两个服务入口：结构一致（标题 + 一句说明 + 按钮），间距与导航统一 -->
+        <div aria-label="获取帮助">
+          <a
+            href="https://www.himd.com/consult?source_page=/osimertinib"
+            class="group block rounded-xl border border-paper-200 bg-paper-50 p-3.5 transition-colors duration-200 hover:border-brand-300 hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 motion-reduce:transition-none"
+          >
+            <p class="font-serif text-[15px] leading-snug font-bold text-ink-950">买药卡在哪一步？</p>
+            <p class="mt-2 text-[14px] leading-relaxed text-ink-600">
+              各省报销比例、双通道药房、备案材料都不同。留下用药情况，按你参保地核对。
+            </p>
+            <span
+              class="mt-3 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-brand-700 px-4 py-2 text-[15px] font-semibold text-white transition-all duration-200 group-hover:gap-3.5 group-hover:bg-brand-800 motion-reduce:transition-none"
+            >
+              获取购药信息
+              <svg
+                viewBox="0 0 16 16"
+                class="h-4 w-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 8h10m0 0L9 4m4 4-4 4" />
+              </svg>
+            </span>
+          </a>
+
+          <a
+            href="https://www.himd.com/recruitment?source_page=/osimertinib"
+            class="group mt-3 block rounded-xl bg-brand-900 p-3.5 transition-colors duration-200 hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 motion-reduce:transition-none"
+          >
+            <p class="font-serif text-[15px] leading-snug font-bold text-white">想找新药？</p>
+            <p class="mt-2 text-[14px] leading-relaxed text-brand-50">
+              耐药后办法不多时，正规在招试验是另一条路，用药和检查通常免费。
+            </p>
+            <span
+              class="mt-3 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 text-[15px] font-semibold text-brand-900 transition-all duration-200 group-hover:gap-3.5 group-hover:bg-brand-50 motion-reduce:transition-none"
+            >
+              查看在招项目
+              <svg
+                viewBox="0 0 16 16"
+                class="h-4 w-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 8h10m0 0L9 4m4 4-4 4" />
+              </svg>
+            </span>
+          </a>
+
+        </div>
+
+      </div>
+    </aside>
+  </div>
+
+</BaseLayout>
+
+<script>
+  // 站内分节跳转只滚动，不写 #锚点：地址栏始终停在 /osimertinib
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const id = decodeURIComponent(link.getAttribute('href')!.slice(1));
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      // 键盘用户需要焦点跟着走，否则读屏仍在原处
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    });
+  });
+
+  // 同一个锚点可能同时有侧栏链接和移动端目录条目，按 id 归组后一起点亮
+  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link], [data-toc-chip]')];
+  const byId = new Map<string, HTMLAnchorElement[]>();
+  for (const link of navLinks) {
+    const id = link.getAttribute('href')?.slice(1);
+    if (!id) continue;
+    const bucket = byId.get(id);
+    if (bucket) bucket.push(link);
+    else byId.set(id, [link]);
+  }
+  const currentLabel = document.querySelector('[data-toc-current-label]');
+
+  if ('IntersectionObserver' in window && byId.size > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          byId.forEach((els, id) => {
+            const active = id === entry.target.id;
+            for (const el of els) el.setAttribute('data-active', String(active));
+            // 收起状态下那一行要显示当前所在章节
+            if (active && currentLabel && els[0]) {
+              currentLabel.textContent = (els[0].textContent ?? '').trim();
+            }
+          });
+        }
+      },
+      { rootMargin: '-15% 0px -75% 0px' },
+    );
+    byId.forEach((_els, id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // 移动端目录折叠：点标题条展开/收起，选中章节后自动收起
+  const tocToggle = document.querySelector<HTMLButtonElement>('[data-toc-toggle]');
+  const tocPanel = document.getElementById('toc-panel');
+  const tocChevron = document.querySelector('[data-toc-chevron]');
+  if (tocToggle && tocPanel && tocChevron) {
+    const setOpen = (open: boolean) => {
+      tocToggle.setAttribute('aria-expanded', String(open));
+      tocPanel.classList.toggle('hidden', !open);
+      tocChevron.classList.toggle('rotate-180', open);
+    };
+    tocToggle.addEventListener('click', () => {
+      setOpen(tocToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    // 捕获阶段先收起：面板回缩会让正文上移，必须在滚动之前完成，否则落点偏移
+    tocPanel.addEventListener(
+      'click',
+      (event) => {
+        if ((event.target as HTMLElement | null)?.closest('a')) setOpen(false);
+      },
+      true,
+    );
+  }
+
+  const bar = document.getElementById('reading-progress');
+  if (bar) {
+    const update = () => {
+      const el = document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      bar.style.width = `${max > 0 ? (el.scrollTop / max) * 100 : 0}%`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+</script>
+
+<style>
+  .sources-details .show-less,
+  .sources-details[open] .show-more {
+    display: none;
+  }
+
+  .sources-details[open] .show-less {
+    display: inline;
+  }
+</style>

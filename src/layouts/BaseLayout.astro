@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+import '../styles/site-chrome.css';
+import SiteHeader from '../components/site/SiteHeader.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+import { SITE } from '../consts';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  schemaLd?: object[];
+  /** 社交分享配图：绝对或站内相对路径，相对路径会补成站点域名 */
+  image?: string;
+  imageAlt?: string;
+  /** 详情页等宽版式页面开启，容器放宽到 7xl */
+  wide?: boolean;
+}
+
+const { title, description, canonical, schemaLd = [], image, imageAlt, wide = false } = Astro.props;
+const pageTitle = `${title} | ${SITE.name}`;
+const container = wide ? 'max-w-7xl' : 'max-w-4xl';
+const absoluteUrl = (path?: string) =>
+  path ? new URL(path, SITE.url).href : undefined;
+const ogUrl = absoluteUrl(canonical ?? Astro.url.pathname);
+const ogImage = absoluteUrl(image);
+
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {ogUrl && <meta property="og:url" content={ogUrl} />}
+    {
+      ogImage && (
+        <>
+          <meta property="og:image" content={ogImage} />
+          {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+        </>
+      )
+    }
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {
+      ogImage && imageAlt ? (
+        <meta name="twitter:image:alt" content={imageAlt} />
+      ) : null
+    }
+    {schemaLd.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#132744" />
+  </head>
+  <body class="flex min-h-dvh flex-col bg-white font-sans text-ink-800">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-ink-900 focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+    >
+      跳到主要内容
+    </a>
+
+    <SiteHeader />
+
+    <main id="main" class={`mx-auto w-full flex-1 px-4 pb-20 ${container}`}>
+      <slot />
+    </main>
+
+    <SiteFooter />
+  </body>
+</html>

@@ -1,0 +1,837 @@
+{
+  "slug": "osimertinib",
+  "note": "全页数字单一真相源。卡面 quickAnswers、labelFacts、正文、FAQ 是同一数字的多个副本：value 必须是页面出现的字面写法，anchor 是页面里紧接该数字前的短语（校验脚本按 anchor 扫描页面，出现登记表以外的数字即报口径冲突）。同一 anchor 下并列多个口径时逐条登记，在 basis 里写清哪个是约数、哪个是精确披露值。",
+  "checked_at": "2026-10-09",
+  "entries": [
+    {
+      "name": "规格（一盒一个月量）",
+      "value": "80mg×30 片",
+      "anchor": "原研药每盒（80mg×30 片",
+      "basis": "说明书规格；一盒即一个月量，价格与自付测算都按这一盒计",
+      "source": "甲磺酸奥希替尼片说明书（规格、包装）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·spec", "frontmatter·prices.unit", "卡3 detail", "正文·要花多少钱 stat-band", "正文·价格渠道表 原研行", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "标准剂量",
+      "value": "每次 80mg",
+      "anchor": "每天 1 次，每次 80mg",
+      "basis": "成人推荐剂量，每日 1 次，整片吞服",
+      "source": "甲磺酸奥希替尼片说明书（用法用量）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·dosage", "labelFacts·怎么吃", "正文·怎么吃 首句与列表", "正文·医生会怎么调药量", "正文·服药期间每天要注意什么", "FAQ·饭前吃还是饭后吃"]
+    },
+    {
+      "name": "减量档位与规格",
+      "value": "40mg",
+      "anchor": "例如降到 40mg",
+      "basis": "说明书规定的唯一减量档（半量）；40mg 同时是另一种上市规格",
+      "source": "甲磺酸奥希替尼片说明书（用法用量、剂量调整、规格）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·archive 剂型/常见包装", "正文·怎么吃", "正文·怎么吃 section-caveat", "正文·严重不良反应表 QTc 行", "正文·医生会怎么调药量表", "正文·QTc 停药后复治段"]
+    },
+    {
+      "name": "漏服补服时限",
+      "value": "12 小时",
+      "anchor": "漏服时距下次服药",
+      "basis": "中国说明书口径：距下次服药超过 12 小时才补服，不足则跳过；依据是一次药效约维持 48 小时",
+      "source": "甲磺酸奥希替尼片说明书（漏服处理）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·怎么吃 首句", "正文·怎么吃 漏服条", "正文·药在身体里会发生什么（12 小时判断的理由）", "正文·服药期间每天要注意什么 漏服条", "FAQ·漏服了怎么办"]
+    },
+    {
+      "name": "原研每盒价格（媒体口径约数）",
+      "value": "4966 元",
+      "anchor": "原研药的公开参考价约为每盒",
+      "basis": "约数层级：媒体口径（2026 年 8 月），来自河南省政府门户网站 2025-10 披露的 4966.2 元；2026 年官方支付标准未公开",
+      "source": "河南省政府门户网站（2025-10）；奥希替尼 2026 年医保价格口径（媒体，2026-08）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·prices[0]", "卡3 answer", "正文·要花多少钱 stat-band", "正文·医保能报多少 折算表表头", "正文·医保能报多少 全年折算段 折算基础", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "原研每盒价格（河南披露精确值）",
+      "value": "4966.2 元/盒",
+      "anchor": "河南省政府门户网站",
+      "basis": "精确值层级：2025-10 披露，对应 2022 年医保续约谈判价；页面正文与卡面用四舍五入的 4966 元，属同一数字的两个层级",
+      "source": "河南省政府门户网站（2025-10）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·要花多少钱 价格渠道表 原研行"]
+    },
+    {
+      "name": "国产仿制药价格（低口径）",
+      "value": "约 1250–1450 元",
+      "anchor": "国产仿制药（江苏万邦等）",
+      "basis": "两种并存报道口径之一；未取到官方挂网价，页面保留区间不取单点",
+      "source": "国产首仿获批与价格下降时间线（摩熵医药，2023-10）；2026 年价格报道",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·prices[1]", "正文·要花多少钱 价格渠道表 仿制行", "正文·仿制药能替代吗", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "国产仿制药价格（高口径）",
+      "value": "3890–4973 元",
+      "anchor": "另有报道为 3890–4973",
+      "basis": "两种并存报道口径之二，与低口径同级，均非官方支付标准",
+      "source": "奥希替尼 2026 年医保价格口径（媒体，2026-08）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·prices[1].note", "正文·要花多少钱 价格渠道表 仿制行", "正文·仿制药能替代吗", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "双通道职工每月自付测算",
+      "value": "1490 元",
+      "anchor": "职工约",
+      "basis": "按 4966 元/盒 ×（1−70%）粗算，未计先行自付、起付线、封顶线",
+      "source": "江西于都县政府（2026-06）；山西省医保局（2024-01）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡3 detail", "正文·要花多少钱 stat-band", "正文·医保能报多少 表 江西行/山西行", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "河南门特职工每月自付测算",
+      "value": "745 元",
+      "anchor": "职工约",
+      "basis": "按 4966 元/盒 ×（1−85%）粗算；河南省门诊特定药品支付标准原文为扫描件，以当地医保系统结算为准",
+      "source": "河南省医保局门诊特定药品支付标准通知",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 表 河南行"]
+    },
+    {
+      "name": "双通道居民每月自付测算",
+      "value": "1986 元",
+      "anchor": "居民约",
+      "basis": "按 4966 元/盒 ×（1−60%）粗算，未计先行自付、起付线、封顶线",
+      "source": "江西于都县政府（2026-06）；山西省医保局（2024-01）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡3 detail", "正文·要花多少钱 stat-band", "正文·医保能报多少 表 江西行/山西行", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "威海居民二档每月自付测算",
+      "value": "2235 元",
+      "anchor": "居民约",
+      "basis": "按 4966 元/盒 ×（1−55%）粗算，口径是居民二档在三级医院、每月 4 万元以下部分",
+      "source": "威海市医保局（2025-08）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 表 威海行"]
+    },
+    {
+      "name": "河南门特居民每月自付测算",
+      "value": "993 元",
+      "anchor": "居民约",
+      "basis": "按 4966 元/盒 ×（1−80%）粗算，口径同河南门特职工行",
+      "source": "河南省医保局门诊特定药品支付标准通知",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 表 河南行"]
+    },
+    {
+      "name": "未报销全年费用",
+      "value": "一年约 5.96 万元",
+      "anchor": "未报销时一年约",
+      "basis": "4966 元/盒 × 12 盒，约数层级",
+      "source": "河南省政府门户网站（2025-10）价格推算",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 全年折算段"]
+    },
+    {
+      "name": "职工报销后全年费用",
+      "value": "一年约 1.8 万",
+      "anchor": "1490 元/月（一年约",
+      "basis": "1490 元/月 × 12，约数层级",
+      "source": "江西、山西双通道药品政策推算",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 全年折算段"]
+    },
+    {
+      "name": "居民报销后全年费用",
+      "value": "一年约 2.4 万",
+      "anchor": "1986 元/月（一年约",
+      "basis": "1986 元/月 × 12，约数层级",
+      "source": "江西、山西双通道药品政策推算",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 全年折算段"]
+    },
+    {
+      "name": "2017 年上市定价",
+      "value": "约 5.1 万元/月",
+      "anchor": "2017 年刚上市时约",
+      "basis": "上市初月费用，媒体口径；与谈判后约 1.5 万元/月 对照构成降幅约 70%",
+      "source": "21 世纪经济报道（2019-09）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·要花多少钱 stat-band 注", "正文·价格与监管时间线表"]
+    },
+    {
+      "name": "2018 年谈判后月费用",
+      "value": "约 1.5 万元/月",
+      "anchor": "谈判后降到约",
+      "basis": "国家医保专项谈判后的月费用口径，与 5.1 万元/月 同一篇报道",
+      "source": "21 世纪经济报道（2019-09）",
+      "kind": "price",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·要花多少钱 stat-band 注"]
+    },
+    {
+      "name": "双通道报销比例（职工）",
+      "value": "70%",
+      "anchor": "职工医保约",
+      "basis": "全国省级双通道政策比较中最常见的职工医保支付比例，非全国统一标准",
+      "source": "《中国卫生政策研究》全国省级政策比较（2024）；江西于都县政府（2026-06）；山西省医保局（2024-01）",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡4 answer", "正文·医保能报多少 首句", "正文·医保能报多少 正文比较段", "正文·医保能报多少 表", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "双通道报销比例（居民）",
+      "value": "60%",
+      "anchor": "居民医保约",
+      "basis": "与职工 70% 同批政策文件，非全国统一标准",
+      "source": "《中国卫生政策研究》全国省级政策比较（2024）；江西于都县政府（2026-06）；山西省医保局（2024-01）",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡4 answer", "正文·医保能报多少 首句", "正文·医保能报多少 正文比较段", "正文·医保能报多少 表", "FAQ·奥希替尼一个月要花多少钱"]
+    },
+    {
+      "name": "威海居民二档报销比例",
+      "value": "55%",
+      "anchor": "以下部分按",
+      "basis": "居民二档、三级医院、每月 4 万元以下部分，属地方案例而非全国口径",
+      "source": "威海市医保局（2025-08）",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 正文比较段", "正文·医保能报多少 表 威海行"]
+    },
+    {
+      "name": "河南门特报销比例（职工）",
+      "value": "85%",
+      "anchor": "定药品政策为职工",
+      "basis": "门诊特定药品支付比例；与 ADAURA II–IIIA 期 5 年总生存率 85% 同数不同口径",
+      "source": "河南省医保局门诊特定药品支付标准通知",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 正文比较段", "正文·医保能报多少 表 河南行"]
+    },
+    {
+      "name": "河南门特报销比例（居民）",
+      "value": "80%",
+      "anchor": "85%、居民",
+      "basis": "门诊特定药品支付比例；与 FLAURA 死亡风险 HR 0.80 同数不同口径",
+      "source": "河南省医保局门诊特定药品支付标准通知",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 正文比较段", "正文·医保能报多少 表 河南行"]
+    },
+    {
+      "name": "乙类药先行自付区间",
+      "value": "约 3%~10%",
+      "anchor": "报销前可能需要先自己承担一部分，各地",
+      "basis": "地方常见区间，非全国统一；自付后剩余金额再按当地比例报销",
+      "source": "省级医保局公开口径汇总；国家医保局双通道管理政策",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·医保能报多少 折叠区 先行自付"]
+    },
+    {
+      "name": "FLAURA 中位总生存期（奥希替尼组）",
+      "value": "38.6 个月",
+      "anchor": "中位总生存期",
+      "basis": "晚期一线单药 III 期随机对照；与 ADAURA 术后辅助人群不可比",
+      "source": "FLAURA 研究（NEJM 2020，DOI 10.1056/NEJMoa1913662）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡2 detail", "正文·疗效 stat-band", "正文·不同治疗阶段表 FLAURA 行", "正文·FLAURA 研究表", "正文·FLAURA 研究段"]
+    },
+    {
+      "name": "FLAURA 中位总生存期（一代靶向药组）",
+      "value": "31.8 个月",
+      "anchor": "中位总生存期",
+      "basis": "同一研究对照组（吉非替尼/厄洛替尼）",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡2 detail", "正文·疗效 stat-band 注", "正文·不同治疗阶段表 FLAURA 行", "正文·FLAURA 研究表", "正文·FLAURA 研究段"]
+    },
+    {
+      "name": "FLAURA2 中位总生存期（联合化疗组）",
+      "value": "47.5 个月",
+      "anchor": "中位总生存期",
+      "basis": "晚期一线奥希替尼＋培美曲塞＋铂类",
+      "source": "FLAURA2 研究（NEJM 2025）；IASLC 新闻稿（2025-09）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·疗效 stat-band", "正文·不同治疗阶段表 FLAURA2 行", "正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA2 中位总生存期（单药组）",
+      "value": "37.6 个月",
+      "anchor": "中位总生存期",
+      "basis": "同一研究单药对照臂",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·疗效 stat-band 注", "正文·不同治疗阶段表 FLAURA2 行", "正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "AURA3 总生存期（奥希替尼组）",
+      "value": "26.8 个月",
+      "anchor": "总生存期分别为",
+      "basis": "T790M 阳性二线；该研究未能证实总生存期差异",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·AURA3 研究段"]
+    },
+    {
+      "name": "AURA3 总生存期（化疗组）",
+      "value": "22.5 个月",
+      "anchor": "总生存期分别为",
+      "basis": "同一研究化疗对照臂，71% 患者后续交叉使用奥希替尼",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·AURA3 研究段"]
+    },
+    {
+      "name": "FLAURA 中位无进展生存期（奥希替尼组）",
+      "value": "18.9 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "晚期一线单药 PFS；是研究人群中位值，不是个体耐药时间",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表", "正文·FLAURA 研究段", "正文·耐药了怎么办 首句", "正文·耐药了怎么办 解释段"]
+    },
+    {
+      "name": "FLAURA 中位无进展生存期（一代靶向药组）",
+      "value": "10.2 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "同一研究对照组，HR 0.46",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表", "正文·FLAURA 研究段"]
+    },
+    {
+      "name": "FLAURA2 中位无进展生存期（联合化疗组）",
+      "value": "25.5 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "奥希替尼＋培美曲塞＋铂类",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA2 中位无进展生存期（单药组）",
+      "value": "16.7 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "同一研究单药对照臂",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "AURA3 中位无进展生存期（奥希替尼组）",
+      "value": "10.1 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "T790M 阳性耐药后二线；与说明书高龄调整剂量比例 10.1% 同数不同口径",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·不同治疗阶段表 AURA3 行", "正文·AURA3 研究段"]
+    },
+    {
+      "name": "AURA3 中位无进展生存期（化疗组）",
+      "value": "4.4 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "同一研究化疗对照臂，HR 0.30",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·不同治疗阶段表 AURA3 行", "正文·AURA3 研究段"]
+    },
+    {
+      "name": "LAURA 中位无进展生存期（奥希替尼巩固组）",
+      "value": "39.1 个月",
+      "anchor": "中位无进展生存期",
+      "basis": "Ⅲ 期不可切除、含铂放化疗后未进展的巩固治疗；总生存数据尚未成熟",
+      "source": "LAURA 研究；FDA 批准公告（2024-09）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·不同治疗阶段表 LAURA 行", "正文·LAURA 研究段"]
+    },
+    {
+      "name": "LAURA 中位无进展生存期（对照组）",
+      "value": "5.6 个月",
+      "anchor": "个月**，对照组为",
+      "basis": "同一研究安慰剂对照，HR 0.16",
+      "source": "LAURA 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·不同治疗阶段表 LAURA 行", "正文·LAURA 研究段"]
+    },
+    {
+      "name": "ADAURA 五年总生存率（奥希替尼组）",
+      "value": "88%",
+      "anchor": "5 年总生存率",
+      "basis": "IB–IIIA 期术后辅助，人群与晚期一线不可比",
+      "source": "ADAURA 研究总生存更新（美国国家癌症研究所 2023；NEJM 2020 DOI 10.1056/NEJMoa2027071）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["卡2 detail", "FAQ·奥希替尼能治愈肺癌吗", "正文·疗效 stat-band", "正文·不同治疗阶段表 ADAURA 行", "正文·ADAURA 研究段"]
+    },
+    {
+      "name": "ADAURA 五年总生存率（安慰剂组）",
+      "value": "78%",
+      "anchor": "安慰剂组",
+      "basis": "同一研究安慰剂臂",
+      "source": "ADAURA 研究总生存更新（美国国家癌症研究所 2023）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·不同治疗阶段表 ADAURA 行", "正文·ADAURA 研究段"]
+    },
+    {
+      "name": "ADAURA 复发累及中枢神经的安慰剂组比例",
+      "value": "10%",
+      "anchor": "安慰剂组",
+      "basis": "DFS 相关亚组：奥希替尼组 1.5%，安慰剂组 10%；与 FLAURA2 停药比例 12% 对 7% 不同口径",
+      "source": "ADAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·ADAURA 研究段", "正文·脑转移控制 列表"]
+    },
+    {
+      "name": "ADAURA II–IIIA 期五年总生存率（奥希替尼组）",
+      "value": "85%",
+      "anchor": "期患者分别为",
+      "basis": "同一研究的 II–IIIA 亚组；与河南门特职工 85% 同数不同口径",
+      "source": "ADAURA 研究总生存更新",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·ADAURA 研究段"]
+    },
+    {
+      "name": "ADAURA II–IIIA 期五年总生存率（安慰剂组）",
+      "value": "73%",
+      "anchor": "期患者分别为",
+      "basis": "同一研究 II–IIIA 亚组对照",
+      "source": "ADAURA 研究总生存更新",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·ADAURA 研究段"]
+    },
+    {
+      "name": "FLAURA 客观缓解率（奥希替尼组）",
+      "value": "77%",
+      "anchor": "客观缓解率（肿瘤明显缩小的比例）",
+      "basis": "FLAURA 研究 ORR；与颅内缓解率 77% 同数不同口径",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表"]
+    },
+    {
+      "name": "FLAURA 客观缓解率（一代靶向药组）",
+      "value": "69%",
+      "anchor": "客观缓解率（肿瘤明显缩小的比例）",
+      "basis": "同一研究对照组",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表"]
+    },
+    {
+      "name": "FLAURA 中位缓解持续时间（奥希替尼组）",
+      "value": "17.6 个月",
+      "anchor": "中位缓解持续时间",
+      "basis": "肿瘤缩小后维持的时间；DoR 与 PFS、OS 口径不同",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表"]
+    },
+    {
+      "name": "FLAURA 中位缓解持续时间（一代靶向药组）",
+      "value": "9.6 个月",
+      "anchor": "中位缓解持续时间",
+      "basis": "同一研究对照组",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表"]
+    },
+    {
+      "name": "FLAURA2 三年生存率（联合化疗组）",
+      "value": "63% 对 51%",
+      "anchor": "年生存率 **",
+      "basis": "FLAURA2 联合化疗对单药；与颅内缓解率 77% 对 63% 中的 63% 同数不同口径",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA2 3 级及以上不良事件比例",
+      "value": "70% 对 34%",
+      "anchor": "明显更多（**",
+      "basis": "联合化疗组对单药组；与双通道职工报销比例 70% 同数不同口径",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA2 因不良反应停用奥希替尼比例",
+      "value": "12% 对 7%",
+      "anchor": "停用奥希替尼的比例为",
+      "basis": "联合化疗组对单药组",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA 死亡风险比",
+      "value": "80%",
+      "anchor": "个月（死亡风险降到约",
+      "basis": "HR 0.80 的白话写法，即死亡风险降到对照组的约 80%；与河南门特居民 80% 同数不同口径",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表", "正文·先看懂 4 个词（HR 0.80 举例）"]
+    },
+    {
+      "name": "FLAURA 进展或死亡风险比",
+      "value": "46%",
+      "anchor": "个月（进展或死亡风险降到对照组的约",
+      "basis": "HR 0.46 的白话写法；与皮疹发生率约 46% 同数不同口径",
+      "source": "FLAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA 研究表", "正文·先看懂 4 个词（HR 0.46 举例）"]
+    },
+    {
+      "name": "FLAURA2 死亡风险比",
+      "value": "77%",
+      "anchor": "个月，死亡风险降到约",
+      "basis": "HR 0.77；与 FLAURA ORR 77%、颅内缓解率 77% 同数不同口径",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "FLAURA2 进展或死亡风险比",
+      "value": "62%",
+      "anchor": "个月，进展或死亡风险降到约",
+      "basis": "HR 0.62",
+      "source": "FLAURA2 研究（NEJM 2025）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·FLAURA2 研究段"]
+    },
+    {
+      "name": "AURA3 客观缓解率（奥希替尼组）",
+      "value": "65%",
+      "anchor": "缓解率分别为",
+      "basis": "T790M 阳性二线 ORR，化疗组 29%；与白细胞减少发生率约 65% 同数不同口径",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·AURA3 研究段"]
+    },
+    {
+      "name": "AURA3 交叉用药比例",
+      "value": "71%",
+      "anchor": "化疗组中有",
+      "basis": "化疗组后续用上奥希替尼的比例，用于解释总生存期差异不明显",
+      "source": "AURA3 研究",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·AURA3 研究段"]
+    },
+    {
+      "name": "颅内缓解率（FLAURA 脑病灶亚组）",
+      "value": "77% 对 63%",
+      "anchor": "颅内缓解率**（脑子里的肿瘤明显缩小）为 **",
+      "basis": "有可测量脑病灶患者的颅内 ORR",
+      "source": "FLAURA 研究脑转移亚组分析",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·脑转移控制 列表"]
+    },
+    {
+      "name": "颅内缓解率（AURA3 脑病灶亚组）",
+      "value": "57% 对 25%",
+      "anchor": "AURA3 研究中为 **",
+      "basis": "T790M 阳性人群颅内 ORR",
+      "source": "AURA3 研究脑转移亚组分析",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·脑转移控制 列表"]
+    },
+    {
+      "name": "复发累及大脑或脑膜比例",
+      "value": "1.5% 对 10%",
+      "anchor": "累及大脑或脑膜的比例 **",
+      "basis": "ADAURA 术后辅助人群的中枢复发比例",
+      "source": "ADAURA 研究（NEJM 2020）",
+      "kind": "trial",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·ADAURA 研究段", "正文·脑转移控制 列表"]
+    },
+    {
+      "name": "不良反应汇总分母",
+      "value": "1813 例",
+      "anchor": "研究安全性数据，共 **",
+      "basis": "说明书汇总的多项研究单药安全性数据；与 AURA 系列 833 例、心脏超声 655 例分母不可混用",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·副作用 表前说明", "正文·副作用 引言 blockquote"]
+    },
+    {
+      "name": "中国说明书 AURA 系列分母",
+      "value": "833 例",
+      "anchor": "AURA 系列 833 例数据",
+      "basis": "中国说明书收录的 AURA 系列患者数，ILD 人种差异与高龄分层数据以此为分母",
+      "source": "甲磺酸奥希替尼片说明书；AURA 系列研究",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·副作用 引言 blockquote", "正文·严重不良反应折叠区 人种差异段", "正文·副作用什么时候出现 年龄段", "正文·副作用节末 source-note"]
+    },
+    {
+      "name": "腹泻发生率",
+      "value": "约 47%",
+      "anchor": "腹泻",
+      "basis": "说明书汇总安全性数据（1813 例单药），多为轻中度",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["labelFacts·常见不舒服", "正文·副作用 首句", "正文·常见反应表", "FAQ·出现皮疹腹泻正常吗"]
+    },
+    {
+      "name": "皮疹发生率",
+      "value": "约 46%",
+      "anchor": "皮疹",
+      "basis": "同上汇总数据；与 FLAURA HR 0.46、PFS 10.2 个月同数不同口径",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["labelFacts·常见不舒服", "正文·副作用 首句", "正文·常见反应表", "FAQ·出现皮疹腹泻正常吗"]
+    },
+    {
+      "name": "白细胞减少发生率",
+      "value": "约 65%",
+      "anchor": "白细胞减少",
+      "basis": "任何级别化验异常，多数无症状但需监测；与 AURA3 ORR 65% 同数不同口径",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·化验异常表"]
+    },
+    {
+      "name": "间质性肺病发生率",
+      "value": "约 4%",
+      "anchor": "间质性肺病（ILD）/肺炎",
+      "basis": "说明书汇总数据；其中约 0.4% 致死；与中国 AURA 系列 3.5% 为不同分母口径",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 ILD 行"]
+    },
+    {
+      "name": "间质性肺病致死比例",
+      "value": "约 0.4%",
+      "anchor": "约 4%，其中约",
+      "basis": "ILD 中的致死占比",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 ILD 行"]
+    },
+    {
+      "name": "心肌病发生率",
+      "value": "约 3.8%",
+      "anchor": "心肌病（心功能下降）",
+      "basis": "说明书汇总数据；其中约 0.1% 致死",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 心肌病行"]
+    },
+    {
+      "name": "心肌病致死比例",
+      "value": "约 0.1%",
+      "anchor": "约 3.8%，其中约",
+      "basis": "心肌病中的致死占比",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 心肌病行"]
+    },
+    {
+      "name": "QTc 间期延长发生率",
+      "value": "约 1.1%",
+      "anchor": "QTc 间期延长 > 500ms |",
+      "basis": "指 QTc 超过 500ms 的比例",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 QTc 行"]
+    },
+    {
+      "name": "角膜炎发生率",
+      "value": "约 0.6%",
+      "anchor": "角膜炎 |",
+      "basis": "说明书汇总数据；与中国 AURA 系列 ILD 致死 0.6% 同数不同口径",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应表 角膜炎行"]
+    },
+    {
+      "name": "中国 AURA 系列 ILD 样反应发生率",
+      "value": "3.5%",
+      "anchor": "间质性肺病样反应发生率",
+      "basis": "中国说明书 AURA 系列 833 例口径，其中 0.6% 致死；与汇总数据约 4% 分母不同",
+      "source": "甲磺酸奥希替尼片说明书",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应折叠区 人种差异段"]
+    },
+    {
+      "name": "日本裔患者 ILD 发生率",
+      "value": "8.2%",
+      "anchor": "日本裔患者",
+      "basis": "AURA 系列 833 例的日本裔亚组",
+      "source": "甲磺酸奥希替尼片说明书",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应折叠区 人种差异段"]
+    },
+    {
+      "name": "亚裔患者 ILD 发生率",
+      "value": "1.9%",
+      "anchor": "，亚裔",
+      "basis": "AURA 系列 833 例的亚裔亚组",
+      "source": "甲磺酸奥希替尼片说明书",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应折叠区 人种差异段"]
+    },
+    {
+      "name": "非亚裔患者 ILD 发生率",
+      "value": "2.9%",
+      "anchor": "、非亚裔",
+      "basis": "AURA 系列 833 例的非亚裔亚组",
+      "source": "甲磺酸奥希替尼片说明书",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应折叠区 人种差异段"]
+    },
+    {
+      "name": "心脏超声随访者 LVEF 明显下降比例",
+      "value": "4.0%",
+      "anchor": "接受心脏超声随访的患者中，",
+      "basis": "655 人接受心脏超声随访的专项统计，约每 25 人 1 人；与心肌病 3.8% 是两个口径（前者多为无症状的 LVEF 下降）",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024）心肌病与左心室功能部分",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·严重不良反应折叠区 心脏专项统计段"]
+    },
+    {
+      "name": "高龄患者 3~4 级不良反应比例",
+      "value": "9.8% 对 6.8%",
+      "anchor": "不良反应更多**：",
+      "basis": "AURA 系列 833 例中 65 岁及以上对总体",
+      "source": "AURA 系列研究汇总（中国说明书口径）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·副作用什么时候出现 年龄段", "正文·特殊人群表 老年人行"]
+    },
+    {
+      "name": "高龄患者因不良反应调整剂量比例",
+      "value": "10.1% 对 6.0%",
+      "anchor": "调整剂量的比例也更高：",
+      "basis": "同上 AURA 系列分层；与 AURA3 的 10.1 个月同数不同口径",
+      "source": "AURA 系列研究汇总（中国说明书口径）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·副作用什么时候出现 年龄段", "正文·特殊人群表 老年人行"]
+    },
+    {
+      "name": "与强诱导剂合用后的暴露量",
+      "value": "约 22%",
+      "anchor": "血药暴露量降到原来的",
+      "basis": "与利福平合用时奥希替尼血药暴露量降至原来的比例，即下降约 78%",
+      "source": "奥希替尼说明书（美国 FDA / DailyMed，2024，药物相互作用）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·相互作用表 加快分解行"]
+    },
+    {
+      "name": "术后辅助标准疗程",
+      "value": "3 年",
+      "anchor": "术后辅助治疗的标准疗程是",
+      "basis": "IB–IIIA 期术后辅助给药时长；晚期患者无固定疗程，进展或不可耐受即停",
+      "source": "甲磺酸奥希替尼片说明书（用法用量）；ADAURA 研究给药方案",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["正文·哪些人适合用", "正文·要吃多久什么时候能停", "正文·ADAURA 研究段", "FAQ·奥希替尼要吃多久"]
+    },
+    {
+      "name": "说明书口径有效期",
+      "value": "36 个月",
+      "anchor": "说明书口径",
+      "basis": "有效期以包装标注为准，说明书给出的口径",
+      "source": "甲磺酸奥希替尼片说明书（贮藏、有效期）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·archive 有效期", "正文·平时要注意 储药条", "FAQ·需要放冰箱吗"]
+    },
+    {
+      "name": "贮藏温度上限",
+      "value": "30℃ 以下",
+      "anchor": "密封、",
+      "basis": "密封、干燥处保存，无需冷藏",
+      "source": "甲磺酸奥希替尼片说明书（贮藏）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·archive 贮藏", "正文·平时要注意 储药条", "FAQ·需要放冰箱吗"]
+    },
+    {
+      "name": "中国获批适应症数量",
+      "value": "5 项",
+      "anchor": "中国获批",
+      "basis": "截至 2026 年 9 月 NMPA 批准的适应症条目数；医保报销限定范围与之一致",
+      "source": "甲磺酸奥希替尼片说明书（NMPA 批准适应症）",
+      "kind": "label",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·indications", "metaDescription", "卡1 detail", "labelFacts·国家批准治什么", "卡1 nextStep", "正文·哪些人适合用", "正文·医保能报多少"]
+    },
+    {
+      "name": "国产首仿获批时间",
+      "value": "2023 年 10 月",
+      "anchor": "首仿",
+      "basis": "江苏万邦甲磺酸奥希替尼片获批，国内首仿，结束原研独占",
+      "source": "国家药监局国产首仿获批信息；摩熵医药（2023-10）",
+      "kind": "regulatory",
+      "checked_at": "2026-10-09",
+      "used_in": ["frontmatter·timeline 2023-10", "frontmatter·archive 国产仿制", "卡6 detail", "正文·要花多少钱 时间线表", "正文·仿制药能替代吗"]
+    }
+  ]
+}

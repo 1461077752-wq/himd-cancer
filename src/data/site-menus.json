@@ -1,0 +1,924 @@
+{
+  "drugs": [
+    {
+      "slug": "niraparib",
+      "name": "尼拉帕利"
+    },
+    {
+      "slug": "temozolomide",
+      "name": "替莫唑胺"
+    },
+    {
+      "slug": "neratinib",
+      "name": "奈拉替尼"
+    },
+    {
+      "slug": "nintedanib",
+      "name": "尼达尼布"
+    },
+    {
+      "slug": "palbociclib",
+      "name": "帕博西尼"
+    },
+    {
+      "slug": "pomalidomide",
+      "name": "泊马度胺"
+    },
+    {
+      "slug": "relugolix",
+      "name": "瑞卢戈利"
+    },
+    {
+      "slug": "necitumumab",
+      "name": "耐昔妥珠单抗"
+    },
+    {
+      "slug": "pemigatinib",
+      "name": "培米替尼"
+    },
+    {
+      "slug": "celecoxib",
+      "name": "塞来昔布"
+    },
+    {
+      "slug": "nilotinib",
+      "name": "尼洛替尼"
+    },
+    {
+      "slug": "pazopanib",
+      "name": "帕唑帕尼"
+    },
+    {
+      "slug": "tofacitinib",
+      "name": "托法替布"
+    },
+    {
+      "slug": "plerixafor",
+      "name": "普乐沙福"
+    },
+    {
+      "slug": "trametinib",
+      "name": "曲美替尼"
+    },
+    {
+      "slug": "thalidomide",
+      "name": "沙利度胺"
+    },
+    {
+      "slug": "sunitinib",
+      "name": "舒尼替尼"
+    },
+    {
+      "slug": "aspirin",
+      "name": "阿司匹林"
+    },
+    {
+      "slug": "irbesartan",
+      "name": "厄贝沙坦"
+    },
+    {
+      "slug": "selumetinib",
+      "name": "司美替尼"
+    },
+    {
+      "slug": "icotinib",
+      "name": "埃克替尼"
+    },
+    {
+      "slug": "nimotuzumab",
+      "name": "尼妥珠单抗"
+    },
+    {
+      "slug": "ibuprofen",
+      "name": "布洛芬"
+    },
+    {
+      "slug": "remdesivir",
+      "name": "瑞德西韦"
+    },
+    {
+      "slug": "bortezomib",
+      "name": "硼替佐米"
+    },
+    {
+      "slug": "sotorasib",
+      "name": "索托拉西布"
+    },
+    {
+      "slug": "venetoclax",
+      "name": "维奈克拉"
+    },
+    {
+      "slug": "chidamide",
+      "name": "西达本胺"
+    },
+    {
+      "slug": "savolitinib",
+      "name": "赛沃替尼"
+    },
+    {
+      "slug": "ceritinib",
+      "name": "塞瑞替尼"
+    },
+    {
+      "slug": "olaparib-tablets",
+      "name": "奥拉帕利片"
+    },
+    {
+      "slug": "proxalutamide",
+      "name": "普克鲁胺"
+    },
+    {
+      "slug": "trastuzumab",
+      "name": "曲妥珠单抗"
+    },
+    {
+      "slug": "favipiravir",
+      "name": "法维拉韦"
+    },
+    {
+      "slug": "penpulimab",
+      "name": "派安普利"
+    },
+    {
+      "slug": "regorafenib",
+      "name": "瑞戈非尼"
+    },
+    {
+      "slug": "ripretinib",
+      "name": "瑞普替尼"
+    },
+    {
+      "slug": "ribociclib",
+      "name": "瑞波西利"
+    },
+    {
+      "slug": "retinoic-acid",
+      "name": "视黄酸"
+    },
+    {
+      "slug": "dacomitinib",
+      "name": "达可替尼"
+    },
+    {
+      "slug": "avatrombopag",
+      "name": "阿伐曲泊帕"
+    },
+    {
+      "slug": "apatinib",
+      "name": "阿帕替尼"
+    },
+    {
+      "slug": "almonertinib",
+      "name": "阿美替尼"
+    },
+    {
+      "slug": "erlotinib",
+      "name": "厄洛替尼"
+    },
+    {
+      "slug": "siltuximab",
+      "name": "司妥昔单抗"
+    },
+    {
+      "slug": "selpercatinib",
+      "name": "塞普替尼"
+    },
+    {
+      "slug": "donafenib",
+      "name": "多纳非尼"
+    },
+    {
+      "slug": "panitumumab",
+      "name": "帕尼单抗"
+    },
+    {
+      "slug": "duvelisib",
+      "name": "度维利塞"
+    },
+    {
+      "slug": "goserelin",
+      "name": "戈舍瑞林"
+    },
+    {
+      "slug": "ponatinib",
+      "name": "普纳替尼"
+    },
+    {
+      "slug": "trabectedin",
+      "name": "曲贝替定"
+    },
+    {
+      "slug": "tislelizumab",
+      "name": "替雷利珠单抗"
+    },
+    {
+      "slug": "letrozole",
+      "name": "来曲唑"
+    },
+    {
+      "slug": "telitacicept",
+      "name": "泰它西普"
+    },
+    {
+      "slug": "zanubrutinib",
+      "name": "泽布替尼"
+    },
+    {
+      "slug": "tepotinib",
+      "name": "特泊替尼"
+    },
+    {
+      "slug": "toripalimab",
+      "name": "特瑞普利单抗"
+    },
+    {
+      "slug": "ivosidenib",
+      "name": "艾伏尼布"
+    },
+    {
+      "slug": "eribulin",
+      "name": "艾日布林"
+    },
+    {
+      "slug": "bendamustine",
+      "name": "苯达莫司汀"
+    },
+    {
+      "slug": "befotertinib",
+      "name": "贝福替尼"
+    },
+    {
+      "slug": "zimberelimab",
+      "name": "赛帕利单抗"
+    },
+    {
+      "slug": "dabrafenib",
+      "name": "达拉非尼"
+    },
+    {
+      "slug": "avapritinib",
+      "name": "阿伐替尼"
+    },
+    {
+      "slug": "apalutamide",
+      "name": "阿帕他胺"
+    },
+    {
+      "slug": "talazoparib",
+      "name": "他拉唑帕尼"
+    },
+    {
+      "slug": "ipilimumab",
+      "name": "伊匹单抗"
+    },
+    {
+      "slug": "vandetanib",
+      "name": "凡德他尼"
+    },
+    {
+      "slug": "erdafitinib",
+      "name": "厄达替尼"
+    },
+    {
+      "slug": "pyrotinib",
+      "name": "吡咯替尼"
+    },
+    {
+      "slug": "denosumab",
+      "name": "地舒单抗"
+    },
+    {
+      "slug": "olaparib",
+      "name": "奥拉帕利"
+    },
+    {
+      "slug": "pertuzumab",
+      "name": "帕妥珠单抗"
+    },
+    {
+      "slug": "enzalutamide",
+      "name": "恩扎卢胺"
+    },
+    {
+      "slug": "lazertinib",
+      "name": "拉泽替尼"
+    },
+    {
+      "slug": "pralsetinib",
+      "name": "普拉替尼"
+    },
+    {
+      "slug": "tremelimumab",
+      "name": "曲美木单抗"
+    },
+    {
+      "slug": "sorafenib",
+      "name": "索拉非尼"
+    },
+    {
+      "slug": "vemurafenib",
+      "name": "维莫非尼"
+    },
+    {
+      "slug": "disitamab-vedotin",
+      "name": "维迪西妥单抗"
+    },
+    {
+      "slug": "alectinib",
+      "name": "艾乐替尼"
+    },
+    {
+      "slug": "cediranib",
+      "name": "西地尼布"
+    },
+    {
+      "slug": "sirolimus",
+      "name": "西罗莫司"
+    },
+    {
+      "slug": "darolutamide",
+      "name": "达洛鲁胺"
+    },
+    {
+      "slug": "acalabrutinib",
+      "name": "阿可替尼"
+    },
+    {
+      "slug": "axicabtagene-ciloleucel",
+      "name": "阿基仑赛"
+    },
+    {
+      "slug": "azacitidine",
+      "name": "阿扎胞苷"
+    },
+    {
+      "slug": "abiraterone",
+      "name": "阿比特龙"
+    },
+    {
+      "slug": "procarbazine",
+      "name": "丙卡巴肼"
+    },
+    {
+      "slug": "lenvatinib",
+      "name": "仑伐替尼"
+    },
+    {
+      "slug": "ibrutinib",
+      "name": "伊布替尼"
+    },
+    {
+      "slug": "zorifertinib",
+      "name": "佐利替尼"
+    },
+    {
+      "slug": "everolimus",
+      "name": "依维莫司"
+    },
+    {
+      "slug": "exemestane",
+      "name": "依西美坦"
+    },
+    {
+      "slug": "crizotinib",
+      "name": "克唑替尼"
+    },
+    {
+      "slug": "cabazitaxel",
+      "name": "卡巴他赛"
+    },
+    {
+      "slug": "dovitinib",
+      "name": "多韦替尼"
+    },
+    {
+      "slug": "osimertinib",
+      "name": "奥希替尼"
+    },
+    {
+      "slug": "olaratumab",
+      "name": "奥拉单抗"
+    },
+    {
+      "slug": "brigatinib",
+      "name": "布加替尼"
+    },
+    {
+      "slug": "pembrolizumab",
+      "name": "帕博利珠单抗"
+    },
+    {
+      "slug": "pucotenlimab",
+      "name": "普特利单抗"
+    },
+    {
+      "slug": "fulvestrant",
+      "name": "氟维司群"
+    },
+    {
+      "slug": "flumatinib",
+      "name": "氟马替尼"
+    },
+    {
+      "slug": "surufatinib",
+      "name": "索凡替尼"
+    },
+    {
+      "slug": "nivolumab",
+      "name": "纳武单抗"
+    },
+    {
+      "slug": "brentuximab-vedotin",
+      "name": "维布妥昔单抗"
+    },
+    {
+      "slug": "cetuximab",
+      "name": "西妥昔单抗"
+    },
+    {
+      "slug": "bevacizumab",
+      "name": "贝伐单抗"
+    },
+    {
+      "slug": "binimetinib",
+      "name": "贝美替尼"
+    },
+    {
+      "slug": "certolizumab",
+      "name": "赛妥珠单抗"
+    },
+    {
+      "slug": "axitinib",
+      "name": "阿昔替尼"
+    },
+    {
+      "slug": "afatinib",
+      "name": "阿法替尼"
+    },
+    {
+      "slug": "ruxolitinib",
+      "name": "鲁索利替尼"
+    },
+    {
+      "slug": "ublituximab",
+      "name": "乌利妥昔单抗"
+    },
+    {
+      "slug": "ixazomib",
+      "name": "伊沙佐米"
+    },
+    {
+      "slug": "furmonertinib",
+      "name": "伏美替尼"
+    },
+    {
+      "slug": "emibetuzumab",
+      "name": "依玛妥珠单抗"
+    },
+    {
+      "slug": "cobimetinib",
+      "name": "卡比替尼"
+    },
+    {
+      "slug": "carfilzomib",
+      "name": "卡非佐米"
+    },
+    {
+      "slug": "gilteritinib",
+      "name": "吉瑞替尼"
+    },
+    {
+      "slug": "temsirolimus",
+      "name": "坦西莫司"
+    },
+    {
+      "slug": "anlotinib",
+      "name": "安罗替尼"
+    },
+    {
+      "slug": "brivanib",
+      "name": "布立尼布"
+    },
+    {
+      "slug": "durvalumab",
+      "name": "德瓦鲁单抗"
+    },
+    {
+      "slug": "ensartinib",
+      "name": "恩沙替尼"
+    },
+    {
+      "slug": "sacituzumab-govitecan",
+      "name": "戈沙妥珠单抗"
+    },
+    {
+      "slug": "lenalidomide",
+      "name": "来那度胺"
+    },
+    {
+      "slug": "fluzoparib",
+      "name": "氟唑帕利"
+    },
+    {
+      "slug": "poziotinib",
+      "name": "波齐替尼"
+    },
+    {
+      "slug": "relatlimab",
+      "name": "瑞拉利单抗"
+    },
+    {
+      "slug": "infigratinib",
+      "name": "英菲替尼"
+    },
+    {
+      "slug": "daratumumab",
+      "name": "达雷妥尤单抗"
+    },
+    {
+      "slug": "atezolizumab",
+      "name": "阿替利珠单抗"
+    },
+    {
+      "slug": "amivantamab",
+      "name": "阿米万他单抗"
+    },
+    {
+      "slug": "adagrasib",
+      "name": "阿达格拉西布"
+    },
+    {
+      "slug": "fisogatinib",
+      "name": "非索替尼"
+    },
+    {
+      "slug": "homoharringtonine",
+      "name": "高三尖杉酯碱"
+    },
+    {
+      "slug": "tazemetostat",
+      "name": "他泽司他"
+    },
+    {
+      "slug": "vorinostat",
+      "name": "伏立诺他"
+    },
+    {
+      "slug": "sintilimab",
+      "name": "信迪利单抗"
+    },
+    {
+      "slug": "lorlatinib",
+      "name": "劳拉替尼"
+    },
+    {
+      "slug": "cabozantinib",
+      "name": "卡博替尼"
+    },
+    {
+      "slug": "pirtobrutinib",
+      "name": "吡托布鲁替尼"
+    },
+    {
+      "slug": "pelitinib",
+      "name": "培利替尼"
+    },
+    {
+      "slug": "pexidartinib",
+      "name": "培西达替尼"
+    },
+    {
+      "slug": "inotuzumab-ozogamicin",
+      "name": "奥加伊妥珠单抗"
+    },
+    {
+      "slug": "obinutuzumab",
+      "name": "奥滨尤妥珠单抗"
+    },
+    {
+      "slug": "onartuzumab",
+      "name": "奥那妥组单抗"
+    },
+    {
+      "slug": "entrectinib",
+      "name": "恩曲替尼"
+    },
+    {
+      "slug": "enasidenib",
+      "name": "恩西地平"
+    },
+    {
+      "slug": "lapatinib",
+      "name": "拉帕替尼"
+    },
+    {
+      "slug": "tisotumab",
+      "name": "替索单抗"
+    },
+    {
+      "slug": "polatuzumab-vedotin",
+      "name": "泊洛妥珠单抗"
+    },
+    {
+      "slug": "refametinib",
+      "name": "瑞法替尼"
+    },
+    {
+      "slug": "repotrectinib",
+      "name": "瑞波替尼"
+    },
+    {
+      "slug": "melphalan",
+      "name": "米尔法兰"
+    },
+    {
+      "slug": "mitotane",
+      "name": "米托坦"
+    },
+    {
+      "slug": "vismodegib",
+      "name": "维莫德吉"
+    },
+    {
+      "slug": "idelalisib",
+      "name": "艾代拉里斯"
+    },
+    {
+      "slug": "mobocertinib",
+      "name": "莫博赛替尼"
+    },
+    {
+      "slug": "belinostat",
+      "name": "贝利替尼"
+    },
+    {
+      "slug": "darunavir",
+      "name": "达芦那韦"
+    },
+    {
+      "slug": "alpelisib",
+      "name": "阿培利司"
+    },
+    {
+      "slug": "ramucirumab",
+      "name": "雷莫西尤单抗"
+    },
+    {
+      "slug": "emapalumab",
+      "name": "依帕伐单抗"
+    },
+    {
+      "slug": "bosutinib",
+      "name": "博舒替尼"
+    },
+    {
+      "slug": "capmatinib",
+      "name": "卡马替尼"
+    },
+    {
+      "slug": "rucaparib",
+      "name": "卢卡帕利"
+    },
+    {
+      "slug": "dinutuximab",
+      "name": "地努图希单抗"
+    },
+    {
+      "slug": "elotuzumab",
+      "name": "埃罗妥珠单抗"
+    },
+    {
+      "slug": "ofatumumab",
+      "name": "奥法木单抗"
+    },
+    {
+      "slug": "tucatinib",
+      "name": "妥卡替尼"
+    },
+    {
+      "slug": "encorafenib",
+      "name": "康奈非尼"
+    },
+    {
+      "slug": "larotrectinib",
+      "name": "拉罗替尼"
+    },
+    {
+      "slug": "ibritumomab-tiuxetan",
+      "name": "替伊莫单抗"
+    },
+    {
+      "slug": "tirabrutinib",
+      "name": "替拉鲁替尼"
+    },
+    {
+      "slug": "letrozole-tablets",
+      "name": "来曲唑片"
+    },
+    {
+      "slug": "linsitinib",
+      "name": "林西替尼"
+    },
+    {
+      "slug": "romidepsin",
+      "name": "罗米地辛"
+    },
+    {
+      "slug": "cemiplimab",
+      "name": "西米普利单抗"
+    },
+    {
+      "slug": "dinutuximab-beta",
+      "name": "达妥昔单抗β"
+    },
+    {
+      "slug": "cyproterone-acetate",
+      "name": "醋酸环丙孕酮"
+    },
+    {
+      "slug": "arbidol",
+      "name": "阿比朵尔"
+    },
+    {
+      "slug": "avelumab",
+      "name": "阿维鲁单抗"
+    },
+    {
+      "slug": "rituximab",
+      "name": "利妥昔单抗"
+    },
+    {
+      "slug": "camrelizumab",
+      "name": "卡瑞利珠单抗"
+    },
+    {
+      "slug": "gemtuzumab",
+      "name": "吉妥单抗"
+    },
+    {
+      "slug": "dostarlimab",
+      "name": "多塔利单抗"
+    },
+    {
+      "slug": "nelfinavir",
+      "name": "奈非那韦"
+    },
+    {
+      "slug": "panobinostat",
+      "name": "帕比司他"
+    },
+    {
+      "slug": "tivozanib",
+      "name": "替沃扎尼"
+    },
+    {
+      "slug": "zevorcabtagene-autoleucel",
+      "name": "泽沃基奥仑赛"
+    },
+    {
+      "slug": "teclistamab",
+      "name": "特立妥单抗"
+    },
+    {
+      "slug": "margetuximab",
+      "name": "玛格妥昔单抗"
+    },
+    {
+      "slug": "foretinib",
+      "name": "福瑞替尼"
+    },
+    {
+      "slug": "midostaurin",
+      "name": "米哚妥林"
+    },
+    {
+      "slug": "fedratinib",
+      "name": "菲卓替尼"
+    },
+    {
+      "slug": "bexarotene",
+      "name": "贝沙罗汀"
+    },
+    {
+      "slug": "recombinant-human-endostatin",
+      "name": "重组人血管内皮抑制素"
+    },
+    {
+      "slug": "alemtuzumab",
+      "name": "阿仑单抗"
+    },
+    {
+      "slug": "perifosine",
+      "name": "哌立福新"
+    },
+    {
+      "slug": "ridaforolimus",
+      "name": "地磷莫司"
+    },
+    {
+      "slug": "olmutinib",
+      "name": "奥莫替尼"
+    },
+    {
+      "slug": "amuvatinib",
+      "name": "安姆伐替尼"
+    },
+    {
+      "slug": "copanlisib",
+      "name": "库潘尼西"
+    },
+    {
+      "slug": "tositumomab",
+      "name": "托西莫单抗"
+    },
+    {
+      "slug": "loncastuximab",
+      "name": "朗妥昔单抗"
+    },
+    {
+      "slug": "sonidegib",
+      "name": "索尼德吉"
+    },
+    {
+      "slug": "epcoritamab",
+      "name": "艾可瑞妥单抗"
+    },
+    {
+      "slug": "blinatumomab",
+      "name": "贝林妥欧单抗"
+    },
+    {
+      "slug": "lurbinectedin",
+      "name": "鲁比卡丁"
+    },
+    {
+      "slug": "telisotuzumab-vedotin",
+      "name": "特立妥珠单抗"
+    },
+    {
+      "slug": "abemaciclib",
+      "name": "玻玛西林"
+    },
+    {
+      "slug": "arginine-deiminase",
+      "name": "精氨酸脱亚胺酶"
+    },
+    {
+      "slug": "mogamulizumab",
+      "name": "莫格利珠单抗"
+    },
+    {
+      "slug": "cofetuzumab",
+      "name": "考非妥珠单抗"
+    },
+    {
+      "slug": "glasdegib",
+      "name": "格拉吉布"
+    },
+    {
+      "slug": "eshalisib",
+      "name": "艾沙妥昔"
+    },
+    {
+      "slug": "olverembatinib",
+      "name": "奥雷巴替尼"
+    }
+  ],
+  "nav": [
+    {
+      "label": "首页",
+      "url": "https://www.himd.com/"
+    },
+    {
+      "label": "健康热点",
+      "url": "https://www.himd.com/health-discover"
+    },
+    {
+      "label": "健康新闻",
+      "url": "https://www.himd.com/health-news"
+    },
+    {
+      "label": "癌症百科",
+      "url": "https://www.himd.com/cancer-encyclopedia",
+      "submenu": "diseases"
+    },
+    {
+      "label": "药品指南",
+      "url": "https://www.himd.com/medicine-guide",
+      "submenu": "drugs"
+    },
+    {
+      "label": "药品购买",
+      "url": "https://www.himd.com/consult"
+    },
+    {
+      "label": "临床新药",
+      "url": "https://www.himd.com/consult"
+    },
+    {
+      "label": "患者招募",
+      "url": "https://www.himd.com/recruitment"
+    }
+  ]
+}

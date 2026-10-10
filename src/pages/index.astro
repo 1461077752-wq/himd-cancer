@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../consts';
+---
+
+<BaseLayout
+  title="首页"
+  description={`${SITE.name}——${SITE.tagline}。为癌症患者与家属提供可信、可读的疾病与药品信息，并连接临床试验服务。`}
+>
+  <section class="mt-10 sm:mt-16">
+    <p class="text-sm font-medium tracking-wide text-brand-700">医学信息编辑 · 患者决策支持</p>
+    <h1
+      class="mt-3 max-w-2xl font-serif text-4xl leading-tight font-bold tracking-tight text-ink-950 sm:text-5xl"
+    >
+      把可信的癌症信息，讲给患者听得懂
+    </h1>
+    <p class="mt-5 max-w-xl leading-relaxed text-ink-600">
+      面向癌症患者与家属的疾病科普、药品信息与临床试验对接服务。不追热点、不堆文章，每个页面按患者真正要做出的决定来编排，打磨到极致再上线。
+    </p>
+    <div class="mt-8">
+      <a
+        href="/osimertinib"
+        class="inline-flex min-h-11 items-center gap-2 rounded-lg bg-ink-950 px-5 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-ink-700 focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+      >
+        查看首个样板页：奥希替尼
+        <svg
+          viewBox="0 0 16 16"
+          class="h-3.5 w-3.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 8h10m0 0L9 4m4 4-4 4"></path>
+        </svg>
+      </a>
+    </div>
+    <ul
+      class="mt-9 flex flex-wrap gap-x-6 gap-y-2 border-t border-ink-100 pt-5 text-sm text-ink-500"
+    >
+      <li>数据标注权威来源与年份</li>
+      <li>免费公开，无广告干扰</li>
+      <li>用药判断以主治医生面诊为准</li>
+    </ul>
+  </section>
+
+  <section class="mt-14 sm:mt-20" aria-label="平台服务">
+    <h2 class="font-serif text-2xl font-bold tracking-tight text-ink-950">我们能为你做什么</h2>
+    <div class="mt-2 divide-y divide-ink-100 border-b border-ink-100">
+      <a
+        href="/osimertinib"
+        class="group flex flex-col gap-2.5 py-7 focus-visible:outline-2 focus-visible:outline-offset-4 sm:flex-row sm:items-center sm:gap-10"
+      >
+        <div class="sm:w-56 sm:shrink-0">
+          <h3 class="font-serif text-lg font-bold text-ink-950">药品信息</h3>
+          <p class="mt-1 text-[14px] font-medium text-brand-700">已上线 · 首个样板</p>
+        </div>
+        <p class="flex-1 text-sm leading-relaxed text-ink-600">
+          奥希替尼（9291 / 泰瑞沙）——我适合用吗、疗效与生存数据、医保价格、副作用分级应对与耐药后的出路。
+        </p>
+        <span class="inline-flex items-center gap-1.5 text-sm font-medium text-brand-700">
+          查看药品页
+          <svg
+            viewBox="0 0 16 16"
+            class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 8h10m0 0L9 4m4 4-4 4"></path>
+          </svg>
+        </span>
+      </a>
+
+      <div class="flex flex-col gap-2.5 py-7 sm:flex-row sm:items-center sm:gap-10">
+        <div class="sm:w-56 sm:shrink-0">
+          <h3 class="font-serif text-lg font-bold text-ink-400">疾病科普</h3>
+          <p class="mt-1 text-[14px] font-medium text-ink-400">建设中</p>
+        </div>
+        <p class="flex-1 text-sm leading-relaxed text-ink-400">
+          每种疾病一个极致页面：怎么确诊、有哪些治疗选择、疗效与生存期、钱要花多少。
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-2.5 py-7 sm:flex-row sm:items-center sm:gap-10">
+        <div class="sm:w-56 sm:shrink-0">
+          <h3 class="font-serif text-lg font-bold text-ink-400">临床试验对接</h3>
+          <p class="mt-1 text-[14px] font-medium text-ink-400">建设中</p>
+        </div>
+        <p class="flex-1 text-sm leading-relaxed text-ink-400">
+          帮助符合条件的患者对接正规临床试验，全程知情同意，可随时退出。
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

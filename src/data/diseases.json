@@ -1,0 +1,330 @@
+[
+  {
+    "slug": "leukemia",
+    "name": "白血病"
+  },
+  {
+    "slug": "burkitt-lymphoma",
+    "name": "伯基特淋巴瘤"
+  },
+  {
+    "slug": "waldenstrom-macroglobulinemia",
+    "name": "华氏巨球蛋白血症"
+  },
+  {
+    "slug": "lung-cancer",
+    "name": "肺癌"
+  },
+  {
+    "slug": "bile-duct-cancer",
+    "name": "胆管癌"
+  },
+  {
+    "slug": "cervical-cancer",
+    "name": "宫颈癌"
+  },
+  {
+    "slug": "acute-myeloid-leukemia",
+    "name": "急性髓细胞白血病"
+  },
+  {
+    "slug": "non-hodgkin-lymphoma",
+    "name": "非霍奇金淋巴瘤"
+  },
+  {
+    "slug": "nasopharyngeal-cancer",
+    "name": "鼻咽癌"
+  },
+  {
+    "slug": "nasal-cavity-cancer",
+    "name": "鼻腔癌"
+  },
+  {
+    "slug": "pituitary-tumor",
+    "name": "垂体瘤"
+  },
+  {
+    "slug": "chronic-myeloid-leukemia",
+    "name": "慢性髓细胞白血病"
+  },
+  {
+    "slug": "liver-cancer",
+    "name": "肝癌"
+  },
+  {
+    "slug": "hodgkin-lymphoma",
+    "name": "霍奇金淋巴瘤"
+  },
+  {
+    "slug": "osteosarcoma",
+    "name": "骨肉瘤"
+  },
+  {
+    "slug": "sinus-cancer",
+    "name": "鼻窦癌"
+  },
+  {
+    "slug": "laryngeal-cancer",
+    "name": "喉癌"
+  },
+  {
+    "slug": "head-neck-cancer",
+    "name": "头颈部癌"
+  },
+  {
+    "slug": "acute-lymphocytic-leukemia",
+    "name": "急性淋巴细胞白血病"
+  },
+  {
+    "slug": "male-breast-cancer",
+    "name": "男性乳腺癌"
+  },
+  {
+    "slug": "anal-cancer",
+    "name": "肛门癌"
+  },
+  {
+    "slug": "gallbladder-cancer",
+    "name": "胆囊癌"
+  },
+  {
+    "slug": "mesothelioma",
+    "name": "间皮瘤"
+  },
+  {
+    "slug": "non-small-cell-lung-cancer",
+    "name": "非小细胞肺癌"
+  },
+  {
+    "slug": "prostate-cancer",
+    "name": "前列腺癌"
+  },
+  {
+    "slug": "ovarian-cancer",
+    "name": "卵巢癌"
+  },
+  {
+    "slug": "oropharyngeal-cancer",
+    "name": "口咽癌"
+  },
+  {
+    "slug": "gestational-trophoblastic-disease",
+    "name": "妊娠滋养细胞疾病"
+  },
+  {
+    "slug": "endometrial-cancer",
+    "name": "子宫内膜癌"
+  },
+  {
+    "slug": "uterine-cancer",
+    "name": "子宫癌"
+  },
+  {
+    "slug": "rhabdomyosarcoma",
+    "name": "横纹肌肉瘤"
+  },
+  {
+    "slug": "lymphoma",
+    "name": "淋巴瘤"
+  },
+  {
+    "slug": "intraocular-melanoma",
+    "name": "眼内黑色素瘤"
+  },
+  {
+    "slug": "renal-cancer",
+    "name": "肾癌"
+  },
+  {
+    "slug": "thymoma",
+    "name": "胸腺瘤"
+  },
+  {
+    "slug": "brain-tumor",
+    "name": "脑瘤"
+  },
+  {
+    "slug": "peritoneal-cancer",
+    "name": "腹膜癌"
+  },
+  {
+    "slug": "esophageal-cancer",
+    "name": "食管癌"
+  },
+  {
+    "slug": "bone-cancer",
+    "name": "骨癌"
+  },
+  {
+    "slug": "myelodysplastic-syndromes",
+    "name": "骨髓增生异常"
+  },
+  {
+    "slug": "breast-cancer",
+    "name": "乳腺癌"
+  },
+  {
+    "slug": "cutaneous-t-cell-lymphoma",
+    "name": "皮肤性T细胞淋巴瘤"
+  },
+  {
+    "slug": "neuroblastoma",
+    "name": "神经母细胞瘤"
+  },
+  {
+    "slug": "fibrous-histiocytoma",
+    "name": "纤维组织细胞瘤"
+  },
+  {
+    "slug": "gastric-cancer",
+    "name": "胃癌"
+  },
+  {
+    "slug": "islet-cell-tumor",
+    "name": "胰岛细胞瘤"
+  },
+  {
+    "slug": "pancreatic-cancer",
+    "name": "胰腺癌"
+  },
+  {
+    "slug": "soft-tissue-sarcoma",
+    "name": "软组织肉瘤"
+  },
+  {
+    "slug": "fallopian-tube-cancer",
+    "name": "输卵管癌"
+  },
+  {
+    "slug": "appendix-cancer",
+    "name": "阑尾癌"
+  },
+  {
+    "slug": "salivary-gland",
+    "name": "唾液腺"
+  },
+  {
+    "slug": "chronic-lymphocytic-leukemia",
+    "name": "慢性淋巴细胞白血病"
+  },
+  {
+    "slug": "parathyroid-carcinoma",
+    "name": "甲状旁腺癌"
+  },
+  {
+    "slug": "skin-cancer",
+    "name": "皮肤癌"
+  },
+  {
+    "slug": "bladder-cancer",
+    "name": "膀胱癌"
+  },
+  {
+    "slug": "dermatofibrosarcoma-protuberans",
+    "name": "隆突性皮肤纤维肉瘤"
+  },
+  {
+    "slug": "hypopharyngeal-cancer",
+    "name": "下咽癌"
+  },
+  {
+    "slug": "lip-cancer",
+    "name": "唇癌"
+  },
+  {
+    "slug": "uterine-sarcoma",
+    "name": "子宫肉瘤"
+  },
+  {
+    "slug": "urethral-cancer",
+    "name": "尿道癌"
+  },
+  {
+    "slug": "gastrointestinal-stromal-tumor",
+    "name": "胃肠道间质瘤"
+  },
+  {
+    "slug": "ovarian-germ-cell-tumor",
+    "name": "卵巢生殖细胞肿瘤"
+  },
+  {
+    "slug": "oral-cancer",
+    "name": "口腔癌"
+  },
+  {
+    "slug": "small-intestine-cancer",
+    "name": "小肠癌"
+  },
+  {
+    "slug": "ewing-sarcoma",
+    "name": "尤文肉瘤"
+  },
+  {
+    "slug": "langerhans-cell-histiocytosis",
+    "name": "朗格罕细胞组织细胞增生症"
+  },
+  {
+    "slug": "thyroid-cancer",
+    "name": "甲状腺癌"
+  },
+  {
+    "slug": "vaginal-cancer",
+    "name": "阴道癌"
+  },
+  {
+    "slug": "melanoma",
+    "name": "黑色素瘤"
+  },
+  {
+    "slug": "small-cell-lung-cancer",
+    "name": "小细胞肺癌"
+  },
+  {
+    "slug": "colorectal-cancer",
+    "name": "结直肠癌"
+  },
+  {
+    "slug": "gastrointestinal-carcinoid",
+    "name": "胃肠道类癌"
+  },
+  {
+    "slug": "squamous-cell-carcinoma",
+    "name": "鳞状细胞癌"
+  },
+  {
+    "slug": "merkel-cell-carcinoma",
+    "name": "默克尔细胞癌"
+  },
+  {
+    "slug": "testicular-cancer",
+    "name": "睾丸癌"
+  },
+  {
+    "slug": "primary-central-nervous-system-lymphoma",
+    "name": "原发性中枢神经系统淋巴瘤"
+  },
+  {
+    "slug": "basal-cell-carcinoma",
+    "name": "基底细胞瘤"
+  },
+  {
+    "slug": "kaposi-sarcoma",
+    "name": "卡波济肉瘤"
+  },
+  {
+    "slug": "castleman-disease",
+    "name": "巨大淋巴结增生症"
+  },
+  {
+    "slug": "extragonadal-germ-cell-tumor",
+    "name": "性腺外生殖细胞肿瘤"
+  },
+  {
+    "slug": "penile-cancer",
+    "name": "阴茎癌"
+  },
+  {
+    "slug": "occult-primary-squamous-cell-carcinoma-of-the-neck",
+    "name": "隐匿性原发鳞状颈癌"
+  }
+]

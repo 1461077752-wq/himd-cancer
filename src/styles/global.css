@@ -1,0 +1,617 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  /* 品牌主色：HIMD 疾病专题页的深蓝体系。
+     锚点取 --himd-blue #0967c9、--himd-blue-deep、--himd-blue-wash #f1f7ff、
+     --accent #1775d1、--accent-soft #e8f3ff、--surface-muted；
+     700 以下按同色相压暗，保证阶梯单调、白字仍达 WCAG AA。 */
+  --color-brand-50: #f1f7ff;
+  --color-brand-100: #e8f3ff;
+  --color-brand-200: #d0e4f7;
+  --color-brand-300: #9bc7ee;
+  --color-brand-400: #65adf2;
+  --color-brand-500: #1775d1;
+  --color-brand-600: #0967c9;
+  --color-brand-700: #0d56ac;
+  --color-brand-800: #094282;
+  --color-brand-900: #0d2f5c;
+  --color-brand-950: #0c1e38;
+
+  /* 中性色：HIMD 的蓝味灰阶，不用纯灰。
+     50=--surface、100=--line、200=--himd-border 系、400=--text-muted、
+     700 为疾病页正文色、900=--text、950=--himd-ink */
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #e4e9f0;
+  --color-ink-200: #d3e0ee;
+  --color-ink-300: #a9bacd;
+  --color-ink-400: #667085;
+  --color-ink-500: #566277;
+  --color-ink-600: #4d5b70;
+  --color-ink-700: #40506a;
+  --color-ink-800: #303f52;
+  --color-ink-900: #202938;
+  --color-ink-950: #132744;
+
+  /* 辅助底色：暖米色，用于患者提示与编辑说明 */
+  --color-paper-50: #faf6ef;
+  --color-paper-100: #f4ede0;
+  --color-paper-200: #e9dec8;
+  --color-paper-300: #dccda9;
+  --color-paper-700: #8a7248;
+
+  /* 警示色：只用于安全红线（立即就医信号）；700 对齐 --danger */
+  --color-danger-50: #fdf3f1;
+  --color-danger-500: #c0392f;
+  --color-danger-700: #9f2f2f;
+
+  --font-sans:
+    system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC',
+    sans-serif;
+  --font-serif: 'Songti SC', 'STSong', 'Noto Serif SC', 'Source Han Serif SC', 'SimSun', serif;
+}
+
+html {
+  /* 桌面端仅有吸顶导航；小屏另有横向目录条，偏移更大 */
+  scroll-padding-top: 5.5rem;
+}
+
+@media (max-width: 63.98rem) {
+  html {
+    scroll-padding-top: 8.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-paper-200);
+}
+
+@layer components {
+  /* 正文排版：编辑式。标题衬线+细分隔线，表格按资料表处理 */
+  .medical-prose {
+    @apply prose max-w-none;
+    --tw-prose-body: theme(--color-ink-800);
+    --tw-prose-headings: theme(--color-ink-950);
+    --tw-prose-links: theme(--color-brand-700);
+    --tw-prose-bold: theme(--color-ink-950);
+    --tw-prose-quotes: theme(--color-ink-800);
+    --tw-prose-quote-borders: theme(--color-paper-700);
+    --tw-prose-bullets: theme(--color-ink-300);
+    --tw-prose-counters: theme(--color-ink-400);
+    --tw-prose-hr: theme(--color-ink-100);
+    --tw-prose-th-bg: theme(--color-ink-50);
+    font-size: 1.1875rem;
+    line-height: 1.9;
+  }
+
+  /* 下划线撤掉后，分节感全靠间距承担：
+     上方 48px（原 64px，那条线原本白吃 13px）＞ 标题↔本节内容 32px ＞ 段落间 26px。
+     标题必须比段落更黏着自己的正文，否则读起来像孤行。 */
+  .medical-prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.625rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .medical-prose h3 {
+    font-weight: 700;
+    color: theme(--color-ink-900);
+  }
+
+  /* 目录跳转要避开吸顶元素：桌面端只有 header（约 72px），
+     移动端 header 48px 之外还压着一条吸顶目录栏（约 42px），需要更多余量。
+     不给这个值，点目录会把标题顶到导航栏底下看不见。 */
+  .medical-prose :is(h2, h3) {
+    scroll-margin-top: 6rem;
+  }
+  @media (width < 40rem) {
+    .medical-prose :is(h2, h3) {
+      scroll-margin-top: 7rem;
+    }
+  }
+
+  /* 首节标题不再吃 4rem 段距：它与上方卡面之间的间距由版面本身负责 */
+  .medical-prose > h2:first-child {
+    margin-top: 0;
+  }
+
+  /* 表格按专业资料表处理：细线、清晰表头、数字列对齐由内容决定 */
+  .medical-prose table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid theme(--color-ink-100);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 1rem;
+  }
+
+  /* 药品页表格列多，窄屏下必须允许长词断行，否则会产生整页横向滚动 */
+  .medical-prose :is(th, td) {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* 极窄屏兜底：单元格内边距收紧，给内容让出宽度 */
+  @media (max-width: 30rem) {
+    .medical-prose th,
+    .medical-prose td {
+      padding: 0.5rem 0.625rem;
+    }
+  }
+
+  .medical-prose thead th {
+    @apply bg-ink-50 font-medium text-ink-700;
+  }
+
+  .medical-prose th,
+  .medical-prose td {
+    border-bottom: 1px solid theme(--color-ink-100);
+    padding: 0.625rem 0.875rem;
+  }
+
+  .medical-prose tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /*
+    窄屏表格竖排：一行一张卡，第一列当行标题，其余格子用 data-label 带上列名。
+    药品页最宽的表有 5 列，390px 下单元格里最长的词要换 16 行才能塞进列宽，
+    横排已经没有可读性可言，所以只能改成逐行展开。
+    thead 用视觉隐藏留在 DOM 里而不是 display:none，屏幕阅读器仍能读到列名。
+  */
+  @media (max-width: 40rem) {
+    .medical-prose table {
+      display: block;
+      border: 0;
+      border-radius: 0;
+      font-size: 0.9375rem;
+    }
+
+    .medical-prose thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    .medical-prose tbody,
+    .medical-prose tbody tr,
+    .medical-prose tbody td {
+      display: block;
+      width: auto;
+    }
+
+    .medical-prose tbody tr {
+      border: 1px solid theme(--color-ink-100);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .medical-prose tbody tr:last-child {
+      margin-bottom: 0;
+    }
+
+    .medical-prose tbody td {
+      border-bottom: 0;
+      padding: 0.25rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0.375rem;
+      align-items: baseline;
+    }
+
+    .medical-prose tbody td:first-child {
+      font-weight: 600;
+      color: theme(--color-brand-700);
+      padding-bottom: 0.35rem;
+    }
+
+    /* 列名不占固定宽度：最长的表头有 17 个字，定宽会把内容挤没 */
+    .medical-prose tbody td:not(:first-child)::before {
+      content: attr(data-label) '：';
+      flex: 0 0 auto;
+      white-space: nowrap;
+      color: theme(--color-ink-500);
+      font-size: 0.8125rem;
+    }
+  }
+
+  /* 患者提示与编辑说明：暖米色注释块 */
+  .medical-prose blockquote {
+    @apply rounded-r-lg border-l-2 bg-paper-50 px-4 py-3 not-italic;
+    border-left-color: theme(--color-paper-700);
+    color: theme(--color-ink-800);
+  }
+
+  .medical-prose blockquote p:first-of-type::before,
+  .medical-prose blockquote p:last-of-type::after {
+    content: none;
+  }
+
+  /* 编辑式小节标题（模板内 h2/h3，与 prose 内样式一致） */
+  .section-heading {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: theme(--color-ink-950);
+  }
+
+  /* 安全红线：整条色带 + 左侧标记，正文中唯一的强对比色 */
+  .danger-band {
+    margin: 1.75rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid theme(--color-danger-500);
+    background: theme(--color-danger-50);
+    color: theme(--color-ink-900);
+  }
+
+  .danger-band strong {
+    color: theme(--color-danger-700);
+  }
+
+  .danger-band > :first-child {
+    margin-top: 0;
+  }
+
+  .danger-band > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* 靶向药信息收集卡：淡青渐变底 + 圆形图标 + 按钮与提示同行 */
+  .medical-prose .lead-form {
+    margin: 2.25rem 0;
+    padding: 1.5rem;
+    border: 1px solid theme(--color-brand-200);
+    border-radius: 12px;
+    background: linear-gradient(135deg, theme(--color-brand-50) 0%, #fff 58%);
+    box-shadow: 0 10px 30px rgb(30 86 142 / 0.07);
+  }
+
+  .medical-prose .lead-form-icon {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: theme(--color-brand-700);
+    color: #fff;
+  }
+
+  .medical-prose .lead-form-icon svg {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
+  .medical-prose .lead-form-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .medical-prose .lead-form-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.1875rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: theme(--color-ink-950);
+  }
+
+  .medical-prose .lead-form-sub {
+    margin-top: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    color: theme(--color-ink-700);
+  }
+
+  .medical-prose .lead-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .medical-prose .lead-form-btn {
+    display: inline-flex;
+    min-height: 2.875rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6875rem 1.375rem;
+    border-radius: 8px;
+    background: theme(--color-brand-700);
+    box-shadow: 0 2px 8px rgb(9 86 172 / 0.22);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.15s ease, gap 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .medical-prose .lead-form-btn:hover {
+    gap: 0.875rem;
+    background: theme(--color-brand-800);
+    box-shadow: 0 4px 14px rgb(9 86 172 / 0.28);
+  }
+
+  .medical-prose .lead-form-btn svg {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+
+  .medical-prose .lead-form-note {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: theme(--color-ink-500);
+  }
+
+  /* 节末免责：与信源同排一行，视觉上比正文轻，但比信源可读 */
+  .medical-prose .section-caveat {
+    margin-top: 1.75rem;
+    padding: 0.625rem 0.875rem;
+    border-left: 3px solid theme(--color-brand-200);
+    border-radius: 0 6px 6px 0;
+    background: theme(--color-brand-50);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: theme(--color-ink-700);
+  }
+
+  .medical-prose .section-caveat + .source-note {
+    margin-top: 0.75rem;
+  }
+
+  .medical-prose .source-note + .section-caveat {
+    margin-top: 1rem;
+  }
+
+  /* 节末信源：细线分隔的小字，与卡面「来源：」保持同一套语汇 */
+  .medical-prose .source-note {
+    margin-top: 2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid theme(--color-ink-100);
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: theme(--color-ink-400);
+  }
+
+  /* 证据层：默认折叠的专业细节 */
+  .medical-prose details {
+    margin: 1.5rem 0 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid theme(--color-ink-100);
+  }
+
+  .medical-prose summary {
+    display: flex;
+    min-height: 2.75rem;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    gap: 0.625rem;
+    font-weight: 600;
+    color: theme(--color-ink-700);
+  }
+
+  .medical-prose summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .medical-prose summary::before {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1;
+    color: theme(--color-ink-400);
+    content: '+';
+  }
+
+  .medical-prose details[open] summary::before {
+    content: '−';
+  }
+
+  .medical-prose details[open] summary {
+    color: theme(--color-ink-950);
+  }
+
+  /* 编辑式数字带：结论先行，出处用小字标注。
+     上下各一条通栏线构成框；列间不画线——列数随宽度在 1/2/3 之间变化，
+     `+` 选择器判断不了换行，画出来必有一半是错位的残线。
+     间距分三层，由外到内收紧：
+       框内（内容↔上下线）≈49px ＞ 组间（行 56 / 列 32px）＞ 组内（26 / 16px）。
+     数值 36px 的字身比它 1.05 的行盒高，字形上下各溢出约 5–7px，
+     所以外边距要用 3.5rem 才换到 49px 的视觉留白（见下）。 */
+  .stat-band {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 3.5rem 2rem;
+    margin: 3.5rem 0 2.75rem;
+    padding: 2.75rem 0;
+    border-top: 1px solid theme(--color-ink-100);
+    border-bottom: 1px solid theme(--color-ink-100);
+  }
+
+  /* 紧跟标题的数字带：标题到框线取 32px，与「标题↔正文」同档，
+     框线到内容仍是带自身的 44px 内边距。 */
+  .medical-prose h2 + .stat-band {
+    margin-top: 1.5rem;
+  }
+
+  /* 数字带内的段落不吃正文的段落间距：prose 的 1.25em 随字号缩放，
+     36px 的数值撑出 45px、14px 的出处只有 17px，组内节奏完全失控。
+     清零后一律用 padding 造间距——padding 不参与外边距合并，
+     也不会被 prose 的 margin 规则盖掉。 */
+  .medical-prose .stat-band p {
+    margin: 0;
+  }
+
+  .stat-value {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: theme(--color-ink-950);
+  }
+
+  /* 视觉间距 = padding + 上一段字形的下溢出 + 下一段字形距盒顶的空隙。
+     两段系数不同（数值 −2.2px、出处 +6.2px），所以 padding 不是同一档：
+     1.75rem 换 26px，0.625rem 换 16px。 */
+  .stat-label {
+    padding-top: 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: theme(--color-ink-800);
+  }
+
+  .stat-note {
+    padding-top: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: theme(--color-ink-400);
+  }
+
+  /* 购药渠道卡：四条渠道不是并列清单，而是「先院内、后院外、最后线上续方」的
+     尝试顺序，所以用有序列表 + 编号 + 2×2 排列（窄屏退回单列，顺序即上下关系）。
+     卡内三段固定为：什么时候走这条 / 具体怎么办 / 底部「报销怎么算」；
+     末段用 margin-top:auto 贴到卡底，同一行的两张卡报销口径齐平，便于横向比较。 */
+  .medical-prose .buy-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* prose 给 li 的 marker 与兄弟外边距都会和卡片边框打架；
+     只清 margin，padding 留给 .buy-card 自己（清了就把卡内边距一起抹掉） */
+  .medical-prose .buy-grid > li {
+    margin: 0;
+  }
+
+  .medical-prose .buy-grid > li::before {
+    display: none;
+  }
+
+  /* 双列门槛取在 60rem：窄一档（768 视口）正文列只有 573px，
+     两张卡各 279px，一行容不下十个汉字，行高从 280 涨到 357 反而更难看。 */
+  @media (width >= 60rem) {
+    .medical-prose .buy-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .medical-prose .buy-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.125rem 1.25rem 1rem;
+    border: 1px solid theme(--color-ink-100);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgb(19 39 68 / 0.045);
+  }
+
+  /* prose 的段落外边距会随字号放大卡内节奏，一律清零后用 padding 造间距 */
+  .medical-prose .buy-card > * {
+    margin: 0;
+  }
+
+  .medical-prose .buy-card-top {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .medical-prose .buy-index {
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: theme(--color-brand-50);
+    font-family: var(--font-serif);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: theme(--color-brand-700);
+  }
+
+  .medical-prose .buy-name {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: theme(--color-ink-950);
+  }
+
+  .medical-prose .buy-when {
+    padding-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    font-weight: 600;
+    color: theme(--color-brand-700);
+  }
+
+  .medical-prose .buy-what {
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: theme(--color-ink-700);
+  }
+
+  /* margin-top:auto 把报销口径推到卡底；1rem 的最小间隔由上一段的
+     padding-bottom 保证（auto 边距本身可以缩到 0）。 */
+  .medical-prose .buy-pay {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid theme(--color-ink-100);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: theme(--color-ink-500);
+  }
+
+  .medical-prose .buy-pay-label {
+    margin-right: 0.375rem;
+    font-weight: 700;
+    color: theme(--color-ink-800);
+  }
+}
+
+/* 保证 [hidden] 始终生效：组件里的选项与步骤靠它切换显示 */
+[hidden]:where(:not([hidden='until-found'])) {
+  display: none !important;
+}
+
+/* 弹窗打开时锁住背景滚动：用 CSS 声明，Esc 关闭后自动恢复 */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* 只有打开后才参与布局：display 交给 [open]，避免工具类覆盖 dialog 关闭态的 UA 隐藏 */
+dialog[data-triage][open] {
+  display: flex;
+  flex-direction: column;
+}

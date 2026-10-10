@@ -1,0 +1,117 @@
+---
+import drugsMenus from '../../data/site-menus.json';
+import diseasesRaw from '../../data/diseases.json';
+
+type NavItem = { label: string; url: string; submenu?: 'diseases' | 'drugs' };
+type Disease = { slug: string; name: string };
+
+const nav = drugsMenus.nav as NavItem[];
+const diseases = diseasesRaw as Disease[];
+const drugs = drugsMenus.drugs as Disease[];
+
+const submenuLinks = (source: NavItem['submenu']) => {
+  if (source === 'diseases') return diseases.map((d) => ({ href: `/${d.slug}`, name: d.name }));
+  if (source === 'drugs') return drugs.map((d) => ({ href: `https://www.himd.com/${d.slug}`, name: d.name }));
+  return [];
+};
+
+let menuId = 0;
+const items = nav.map((item) => {
+  if (item.submenu) {
+    menuId += 1;
+    return { ...item, menuId, links: submenuLinks(item.submenu) };
+  }
+  return { ...item, menuId: null, links: [] };
+});
+---
+
+<header class="header" id="header"> <nav aria-label="Global" class="navbar"> <a href="https://www.himd.com" class="logo"> <span class="sr-only">必需药</span> <img src="/images/himd-logo.png" alt="必需药" width="76" height="24"> </a> <div class="navbar-toggle-wrapper"> <button type="button" class="navbar-toggle-button" aria-label="展开导航" data-mobile-open> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="navbar-toggle-icon"> <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </button> </div> <div class="navbar-desktop-menu">{items.map((item) => item.menuId === null ? (
+    <a href={item.url} class="navbar-link" title={item.label}>{item.label}</a>
+  ) : (
+    <div class="navbar-desktop-menu-item"> <a href={item.url} id={`desktop-menu-btn-${item.menuId}`} data-menu-id={String(item.menuId)} class="navbar-link has-submenu" title={item.label}>
+{item.label}
+<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-5"><path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg> </a> <div id={`desktop-menu-popover-${item.menuId}`} class="desktop-menu-solutions hidden" data-popover-id={String(item.menuId)}> <div class="desktop-menu-solutions-content"> <div class="desktop-menu-solutions-grid">{item.links.map((link) => (
+        <a href={link.href}>{link.name}</a>
+      ))}</div> </div> </div> </div>
+  ))}</div> <div class="navbar-actions"> <form class="search" action="/search" method="get" role="search"> <input id="site-search" type="text" name="q" placeholder="关键词" class="search-input" aria-label="搜索 HIMD 资料"> <button type="submit" class="search-button" aria-label="搜索"> <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" fill="none" viewBox="0 0 24 24" aria-hidden="true"> <circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.8"></circle> <path d="m16 16 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path> </svg> </button> </form> </div> </nav> <div class="navbar-mobile-dialog hidden" id="mobile-menu" role="dialog" aria-modal="true" aria-label="全站导航"> <div class="navbar-mobile-dialog-header"> <a href="https://www.himd.com" class="navbar-mobile-dialog-logo"> <span class="sr-only">必需药</span> <img src="/images/himd-logo.png" alt="必需药" width="76" height="24"> </a> <button type="button" class="navbar-mobile-dialog-close" aria-label="关闭菜单" data-mobile-close> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="navbar-mobile-dialog-close-icon"> <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </button> </div> <div class="navbar-mobile-content"> <div class="navbar-mobile-content-inner"> <div class="navbar-mobile-menu">{items.map((item) => item.menuId === null ? (
+    <a href={item.url} class="navbar-mobile-link" title={item.label}>{item.label}</a>
+  ) : (
+    <div class="navbar-mobile-menu-item"> <button type="button" class="navbar-mobile-menu-toggle" aria-expanded="false">
+{item.label}
+<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-5"><path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd"></path></svg> </button> <div class="navbar-mobile-submenu hidden">{item.links.map((link) => (
+        <a href={link.href}>{link.name}</a>
+      ))}</div> </div>
+  ))}</div> <form class="navbar-mobile-search" action="/search" method="get" role="search"> <input id="mobile-search" type="text" name="q" placeholder="关键词" class="navbar-mobile-search-input" aria-label="搜索 HIMD 资料"> </form> </div> </div> </div> </header> <script is:inline>
+(function () {
+  function ready(fn) {
+    if (document.readyState !== 'loading') { fn(); }
+    else { document.addEventListener('DOMContentLoaded', fn); }
+  }
+
+  ready(function () {
+    // 吸顶背景切换
+    var header = document.getElementById('header');
+    function updateHeader() {
+      if (header) { header.classList.toggle('sticky-top', window.scrollY > 0); }
+    }
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, { passive: true });
+
+    // 桌面端下拉菜单（鼠标悬停）
+    var menuTimers = new Map();
+    var menuButtons = document.querySelectorAll('.navbar-link.has-submenu');
+    function hideAllExcept(id) {
+      document.querySelectorAll('.desktop-menu-solutions').forEach(function (p) {
+        if (p.getAttribute('data-popover-id') !== id) { p.classList.add('hidden'); }
+      });
+    }
+    menuButtons.forEach(function (btn) {
+      var id = btn.getAttribute('data-menu-id');
+      var popover = document.getElementById('desktop-menu-popover-' + id);
+      if (!popover) { return; }
+      btn.addEventListener('mouseenter', function () {
+        if (menuTimers.has(id)) { clearTimeout(menuTimers.get(id)); menuTimers.delete(id); }
+        hideAllExcept(id);
+        popover.classList.remove('hidden');
+      });
+      btn.addEventListener('mouseleave', function () {
+        var t = setTimeout(function () { popover.classList.add('hidden'); menuTimers.delete(id); }, 200);
+        menuTimers.set(id, t);
+      });
+      popover.addEventListener('mouseenter', function () {
+        if (menuTimers.has(id)) { clearTimeout(menuTimers.get(id)); menuTimers.delete(id); }
+      });
+      popover.addEventListener('mouseleave', function () {
+        popover.classList.add('hidden');
+      });
+    });
+
+    // 移动端菜单开合
+    var dialog = document.getElementById('mobile-menu');
+    var openBtn = document.querySelector('[data-mobile-open]');
+    var closeBtn = document.querySelector('[data-mobile-close]');
+    if (openBtn && dialog) {
+      openBtn.addEventListener('click', function () {
+        dialog.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+    if (closeBtn && dialog) {
+      closeBtn.addEventListener('click', function () {
+        dialog.classList.add('hidden');
+        document.body.style.overflow = '';
+      });
+    }
+
+    // 移动端子菜单折叠
+    document.querySelectorAll('.navbar-mobile-menu-toggle').forEach(function (t) {
+      t.addEventListener('click', function () {
+        var sub = t.nextElementSibling;
+        var expanded = t.getAttribute('aria-expanded') === 'true';
+        t.setAttribute('aria-expanded', String(!expanded));
+        if (sub) { sub.classList.toggle('hidden', expanded); }
+      });
+    });
+  });
+})();
+</script>
